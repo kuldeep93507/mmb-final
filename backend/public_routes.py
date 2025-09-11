@@ -1,0 +1,136 @@
+from fastapi import APIRouter, HTTPException
+from typing import List
+from models import *
+# MongoDB import removed - using mock database
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# Database will be injected from server.py
+db = None
+
+public_router = APIRouter(prefix="/api", tags=["public"])
+
+# Public Routes for Frontend
+@public_router.get("/services", response_model=List[Service])
+async def get_public_services():
+    services = await db.services.find({"active": True}).to_list()
+    return [Service(**service) for service in services]
+
+@public_router.get("/projects", response_model=List[Project])
+async def get_public_projects():
+    projects = await db.projects.find().to_list()
+    return [Project(**project) for project in projects]
+
+@public_router.get("/testimonials", response_model=List[Testimonial])
+async def get_public_testimonials():
+    testimonials = await db.testimonials.find({"approved": True}).to_list()
+    return [Testimonial(**testimonial) for testimonial in testimonials]
+
+@public_router.get("/blogs", response_model=List[BlogPost])
+async def get_public_blogs():
+    blogs = await db.blogs.find({"published": True}).to_list()
+    return [BlogPost(**blog) for blog in blogs]
+
+@public_router.get("/blogs/{blog_id}", response_model=BlogPost)
+async def get_blog_by_id(blog_id: str):
+    blog = await db.blogs.find_one({"id": blog_id, "published": True})
+    if not blog:
+        raise HTTPException(status_code=404, detail="Blog not found")
+    return BlogPost(**blog)
+
+@public_router.get("/contacts", response_model=List[ContactInquiry])
+async def get_contacts():
+    contacts = await db.contacts.find().to_list()
+    return [ContactInquiry(**contact) for contact in contacts]
+
+@public_router.post("/contact", response_model=ContactInquiry)
+async def submit_contact(contact_data: ContactCreate):
+    contact = ContactInquiry(**contact_data.dict())
+    await db.contacts.insert_one(contact.dict())
+    return contact
+
+# Public Profile/Contact Info API
+@public_router.get("/profile")
+async def get_public_profile():
+    # Get the first admin's profile
+    admin = await db.admins.find_one({})
+    if not admin:
+        return {
+            "name": "Kuldeep Parjapati",
+            "email": "hello@mmb.dev",
+            "phone": "+91 98765 43210",
+            "whatsapp": "+91 98765 43210",
+            "address": "India",
+            "bio": "Professional Web Developer & Designer creating modern, responsive websites and digital solutions that convert visitors into customers.",
+            "linkedin": "https://linkedin.com/in/mmb",
+            "github": "https://github.com/mmb",
+            "twitter": "https://twitter.com/mmb",
+            "instagram": "https://instagram.com/mmb",
+            "website": "https://mmb.dev"
+        }
+    
+    profile = await db.profiles.find_one({"admin_id": admin["id"]})
+    if not profile:
+        return {
+            "name": "Kuldeep Parjapati",
+            "email": "hello@mmb.dev",
+            "phone": "+91 98765 43210",
+            "whatsapp": "+91 98765 43210",
+            "address": "India",
+            "bio": "Professional Web Developer & Designer creating modern, responsive websites and digital solutions that convert visitors into customers.",
+            "linkedin": "https://linkedin.com/in/mmb",
+            "github": "https://github.com/mmb",
+            "twitter": "https://twitter.com/mmb",
+            "instagram": "https://instagram.com/mmb",
+            "website": "https://mmb.dev"
+        }
+    
+    return {
+        "name": profile.get("name", "Kuldeep Parjapati"),
+        "email": profile.get("email", "hello@mmb.dev"),
+        "phone": profile.get("phone", "+91 98765 43210"),
+        "whatsapp": profile.get("whatsapp", "+91 98765 43210"),
+        "address": profile.get("address", "India"),
+        "bio": profile.get("bio", "Professional Web Developer & Designer"),
+        "linkedin": profile.get("linkedin", "https://linkedin.com/in/mmb"),
+        "github": profile.get("github", "https://github.com/mmb"),
+        "twitter": profile.get("twitter", "https://twitter.com/mmb"),
+        "instagram": profile.get("instagram", "https://instagram.com/mmb"),
+        "website": profile.get("website", "https://mmb.dev")
+    }
+
+# Public Media API
+@public_router.get("/media")
+async def get_media_settings():
+    """Get public media settings"""
+    try:
+        media_collection = db.media_settings
+        media_data = await media_collection.find_one({"id": "main"})
+        
+        if not media_data:
+            # Return default empty media settings
+            return {
+                "logo": "",
+                "hero_image": "", 
+                "about_image": "",
+                "favicon": ""
+            }
+        
+        # Remove MongoDB _id field
+        media_data.pop('_id', None)
+        media_data.pop('id', None)
+        
+        return media_data
+        
+    except Exception as e:
+        return {
+            "logo": "",
+            "hero_image": "",
+            "about_image": "", 
+            "favicon": ""
+        }

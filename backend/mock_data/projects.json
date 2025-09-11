@@ -1,0 +1,235 @@
+[
+  {
+    "id": "770a046e-9f09-475b-b0e2-20635ec693be",
+    "title": "Durga Chemical Solutions",
+    "description": "Corporate website for chemical solutions company with product catalog and inquiry system",
+    "image": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=400&fit=crop",
+    "category": "Corporate Website",
+    "tags": [
+      "WordPress",
+      "Corporate",
+      "Catalog"
+    ],
+    "technologies": [
+      "WordPress",
+      "PHP",
+      "MySQL"
+    ],
+    "live_url": "https://durgachemsol.com",
+    "github_url": null,
+    "featured": true,
+    "created_at": "2025-09-11T12:29:49.447003"
+  },
+  {
+    "id": "3b48b11b-fb19-46da-b69d-051814c735c8",
+    "title": "Hisar Job Place",
+    "description": "Job portal connecting employers with job seekers in Hisar region",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+    "category": "Web Application",
+    "tags": [
+      "Job Portal",
+      "React",
+      "Database"
+    ],
+    "technologies": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "JWT"
+    ],
+    "live_url": "https://hisarjobplace.in",
+    "github_url": null,
+    "featured": true,
+    "created_at": "2025-09-11T12:29:49.447020"
+  },
+  {
+    "id": "860a520d-a6c2-4b36-bbec-d11ce64237f7",
+    "title": "NeoGenie Shop",
+    "description": "E-commerce platform with modern design and seamless shopping experience",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+    "category": "E-commerce",
+    "tags": [
+      "E-commerce",
+      "Shopping",
+      "Payment"
+    ],
+    "technologies": [
+      "React",
+      "Node.js",
+      "Stripe",
+      "MongoDB"
+    ],
+    "live_url": "https://neogenie.shop",
+    "github_url": null,
+    "featured": true,
+    "created_at": "2025-09-11T12:29:49.447044"
+  },
+  {
+    "id": "6df2b77c-e74b-43e4-a1a8-430386d2936d",
+    "title": "Pensiya Krishi Farm",
+    "description": "Agricultural website showcasing farm products and organic farming practices",
+    "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop",
+    "category": "Agriculture",
+    "tags": [
+      "Agriculture",
+      "Organic",
+      "Products"
+    ],
+    "technologies": [
+      "WordPress",
+      "WooCommerce",
+      "PHP"
+    ],
+    "live_url": "https://pensiyakrishifarm.com",
+    "github_url": null,
+    "featured": false,
+    "created_at": "2025-09-11T12:29:49.447059"
+  },
+  {
+    "id": "62e584d7-d8ab-4f7c-a7c7-1192be27ed8a",
+    "title": "Krishi Ledger App",
+    "description": "Farm management application for tracking crops, expenses, and profits",
+    "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
+    "category": "Web Application",
+    "tags": [
+      "Agriculture",
+      "Management",
+      "Dashboard"
+    ],
+    "technologies": [
+      "React",
+      "Node.js",
+      "Charts.js",
+      "MongoDB"
+    ],
+    "live_url": "https://krishi-ledger-c4ab0f15.base44.app",
+    "github_url": null,
+    "featured": false,
+    "created_at": "2025-09-11T12:29:49.447071"
+  },
+  {
+    "id": "751918bb-cfaf-4cc4-9d7a-9f84bc57e234",
+    "title": "Tech Haryana",
+    "description": "Technology news and updates platform for Haryana region",
+    "image": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
+    "category": "News Portal",
+    "tags": [
+      "Technology",
+      "News",
+      "Regional"
+    ],
+    "technologies": [
+      "WordPress",
+      "PHP",
+      "MySQL",
+      "Bootstrap"
+    ],
+    "live_url": "https://techharyana.in",
+    "github_url": null,
+    "featured": false,
+    "created_at": "2025-09-11T12:29:49.447084"
+  },
+  {
+    "id": "027679d0-8f06-4e56-ad30-497c94975c0b",
+    "title": "Pensiya Krishi Farm Shop",
+    "description": "Online shop for organic farm products with delivery system",
+    "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop",
+    "category": "E-commerce",
+    "tags": [
+      "Agriculture",
+      "E-commerce",
+      "Organic"
+    ],
+    "technologies": [
+      "WooCommerce",
+      "WordPress",
+      "Payment Gateway"
+    ],
+    "live_url": "https://pensiyakrishifarm.shop",
+    "github_url": null,
+    "featured": true,
+    "created_at": "2025-09-11T12:29:49.447096"
+  },
+  {
+    "id": "d3fbe3e3-41e4-4a79-8071-01076b096d4e",
+    "title": "DigiSell Platform",
+    "description": "Digital marketplace for buying and selling digital products and services",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+    "category": "Digital Marketplace",
+    "tags": [
+      "Marketplace",
+      "Digital Products",
+      "E-commerce"
+    ],
+    "technologies": [
+      "React",
+      "Node.js",
+      "Payment Gateway",
+      "MongoDB"
+    ],
+    "live_url": "https://digi-sell-727f2f0c.base44.app",
+    "github_url": null,
+    "featured": true,
+    "created_at": "2025-09-11T12:29:49.447107"
+  },
+  {
+    "id": "bf7a94b4-f9a8-43f7-9de5-3582eab9aa3c",
+    "title": "Skillpay - Payment Solutions",
+    "description": "Modern payment gateway website with secure transactions and user-friendly interface",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
+    "category": "Website Development",
+    "tags": [
+      "React",
+      "Payment Gateway",
+      "Security"
+    ],
+    "technologies": [
+      "React",
+      "Node.js",
+      "Stripe",
+      "MongoDB"
+    ],
+    "live_url": "https://skillpay.shop",
+    "github_url": "https://github.com/mmb/skillpay",
+    "featured": true,
+    "created_at": "2025-09-11T12:30:22.838687"
+  },
+  {
+    "id": "8d5a70e8-0ba6-4b4e-921f-c70210367de3",
+    "title": "Pensiya Krishi Farm",
+    "description": "Agricultural website showcasing farm products and organic farming practices",
+    "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop",
+    "category": "Agriculture",
+    "tags": [
+      "Agriculture",
+      "Organic",
+      "Products"
+    ],
+    "technologies": [
+      "WordPress",
+      "WooCommerce",
+      "PHP"
+    ],
+    "live_url": "https://pensiyakrishifarm.com",
+    "github_url": null,
+    "featured": false,
+    "created_at": "2025-09-11T12:30:22.838767"
+  },
+  {
+    "id": "e992ec18-bcf1-49e5-8556-6762df07af17",
+    "title": "sdfdsaf",
+    "description": "sdafsad",
+    "image": "fdsafsadf",
+    "category": "asdf",
+    "tags": [
+      "sadffa"
+    ],
+    "technologies": [
+      "sdfaf"
+    ],
+    "live_url": "dsffsdaf",
+    "github_url": "",
+    "featured": true,
+    "created_at": "2025-09-11T14:52:14.610793"
+  }
+]

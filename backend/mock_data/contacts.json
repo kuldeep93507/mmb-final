@@ -1,0 +1,26 @@
+[
+  {
+    "id": "b44f31e2-5ddd-4dd2-a07c-bf4a6f128a4f",
+    "name": "Sarah Wilson",
+    "email": "sarah@company.com",
+    "phone": "+91 87654 32109",
+    "project_type": "E-commerce Store",
+    "budget": "₹50,000 - ₹1,00,000",
+    "message": "Looking for an e-commerce solution with payment gateway integration.",
+    "timeline": "3-4 Weeks",
+    "read": true,
+    "created_at": "2025-09-11T12:31:11.497283"
+  },
+  {
+    "id": "d75a659b-7743-4716-b0f0-72d71eb40f41",
+    "name": "safdsdaf",
+    "email": "sdfdsf@gmail.com",
+    "phone": "dsafdsf",
+    "project_type": "Web Application",
+    "budget": "₹10,000 - ₹25,000",
+    "message": "sdfasdaf",
+    "timeline": "ASAP (Rush Job)",
+    "read": true,
+    "created_at": "2025-09-11T15:09:20.052068"
+  }
+]
