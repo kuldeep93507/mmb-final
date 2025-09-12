@@ -30,6 +30,18 @@ class MockDB:
         self.data_dir = ROOT_DIR / 'mock_data'
         self.data_dir.mkdir(exist_ok=True)
         
+        # Define collections as attributes for compatibility
+        self.admins = self.get_collection('admins')
+        self.services = self.get_collection('services')
+        self.projects = self.get_collection('projects')
+        self.testimonials = self.get_collection('testimonials')
+        self.blogs = self.get_collection('blogs')
+        self.contacts = self.get_collection('contacts')
+        self.profiles = self.get_collection('profiles')
+        self.media_settings = self.get_collection('media_settings')
+        self.site_settings = self.get_collection('site_settings')
+        self.offers = self.get_collection('offers')
+        
     def get_collection(self, name):
         return MockCollection(self.data_dir / f'{name}.json')
 
@@ -247,18 +259,6 @@ class MockCollection:
 
 # Create mock database instance
 db = MockDB()
-
-# Add collections as attributes for compatibility
-db.admins = db.get_collection('admins')
-db.services = db.get_collection('services')
-db.projects = db.get_collection('projects')
-db.testimonials = db.get_collection('testimonials')
-db.blogs = db.get_collection('blogs')
-db.contacts = db.get_collection('contacts')
-db.profiles = db.get_collection('profiles')
-db.media_settings = db.get_collection('media_settings')
-db.site_settings = db.get_collection('site_settings')
-db.offers = db.get_collection('offers')
 
 # Inject database into route modules
 import admin_routes
