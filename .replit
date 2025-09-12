@@ -44,5 +44,5 @@ externalPort = 3001
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["bash", "-c", "cd backend && PORT=5000 python server.py"]
+run = ["bash", "-c", "cd backend && python server.py"]
 build = ["bash", "-c", "npm run build"]
