@@ -1,18 +1,21 @@
-from fastapi import FastAPI, APIRouter
-from fastapi.staticfiles import StaticFiles
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
 import os
 import logging
 import json
 from pathlib import Path
+
+# Load environment variables FIRST before any other imports
+ROOT_DIR = Path(__file__).parent
+from dotenv import load_dotenv
+load_dotenv(ROOT_DIR / '.env')
+
+# Now import FastAPI and route modules (which depend on env vars)
+from fastapi import FastAPI, APIRouter
+from fastapi.staticfiles import StaticFiles
+from starlette.middleware.cors import CORSMiddleware
 from admin_routes import admin_router
 from public_routes import public_router
 from profile_routes import profile_router
 from datetime import datetime
-
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
 
 # Create uploads directory if it doesn't exist
 uploads_dir = ROOT_DIR / "uploads"
