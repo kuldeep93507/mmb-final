@@ -10,6 +10,11 @@ This is a full-stack portfolio website featuring a React frontend and FastAPI ba
 - Set up CORS for cross-origin communication
 - Configured workflows for both frontend and backend
 - Added deployment configuration for autoscale
+- **Deployment Fixes Applied**:
+  - Removed packageManager field from frontend/package.json to fix npm installation issues
+  - Updated root package.json start command to default to PORT 5000 for deployment
+  - Verified build and install commands properly target frontend directory
+  - Resolved "Invalid Version" errors in deployment process
 
 ## Project Architecture
 ### Frontend (React + TailwindCSS)
