@@ -1,21 +1,5 @@
 [
   {
-    "id": "c0106bed-c6d5-4308-9781-e9ce650a41dc",
-    "title": "Digital Marketing",
-    "description": "Complete digital marketing solutions including social media and SEO strategies",
-    "price": "Starting from ₹5,000/month",
-    "duration": "Ongoing",
-    "features": [
-      "Social Media",
-      "SEO Strategy",
-      "Content Calendar",
-      "Analytics"
-    ],
-    "icon": "TrendingUp",
-    "active": true,
-    "created_at": "2025-09-11T12:30:22.717276"
-  },
-  {
     "id": "0adb06ec-29d5-4b08-8a07-40fbd4709868",
     "title": "Website Development",
     "description": "Custom responsive websites built with modern technologies like React, Next.js, and Node.js",
@@ -64,22 +48,6 @@
     "created_at": "2025-09-11T12:30:45.619729"
   },
   {
-    "id": "c6125d7e-58b3-47e3-b08f-5d791848c881",
-    "title": "WordPress Development",
-    "description": "Custom WordPress themes and plugins with easy-to-use admin panels",
-    "price": "Starting from ₹10,000",
-    "duration": "5-7 days",
-    "features": [
-      "Custom Themes",
-      "Plugin Development",
-      "WooCommerce",
-      "SEO Ready"
-    ],
-    "icon": "Code",
-    "active": true,
-    "created_at": "2025-09-11T12:30:45.619738"
-  },
-  {
     "id": "e72179e8-ee8f-4c7d-9851-049f35002692",
     "title": "Content Writing",
     "description": "SEO-optimized content that engages your audience and improves search rankings",
@@ -110,22 +78,6 @@
     "icon": "Globe",
     "active": true,
     "created_at": "2025-09-12T08:56:29.958199"
-  },
-  {
-    "id": "0f5f72eb-a933-49ca-8f8e-2284b65633fa",
-    "title": "Landing Page Design",
-    "description": "High-conversion landing pages that turn visitors into customers with compelling design and copy",
-    "price": "Starting from ₹8,000",
-    "duration": "3-5 days",
-    "features": [
-      "Conversion Focused",
-      "Mobile First",
-      "A/B Testing",
-      "Analytics Setup"
-    ],
-    "icon": "Layout",
-    "active": true,
-    "created_at": "2025-09-12T08:56:29.958383"
   },
   {
     "id": "5da0a07c-56d3-4838-9a0b-273760798b0b",
