@@ -277,8 +277,16 @@ app.include_router(admin_router)
 app.include_router(public_router)
 app.include_router(profile_router)
 
-# Get CORS origins from environment
-cors_origins = os.getenv('CORS_ORIGINS', '*').split(',') if os.getenv('CORS_ORIGINS') != '*' else ["*"]
+# Get CORS origins from environment - avoid wildcard for security
+cors_origins_env = os.getenv('CORS_ORIGINS', '')
+if cors_origins_env:
+    cors_origins = [origin.strip() for origin in cors_origins_env.split(',')]
+else:
+    # Default to specific domains for security
+    cors_origins = [
+        'https://c8c5ce43-b358-4b41-9b87-8a58609f42a6-00-kmxcabryim7l.kirk.replit.dev',
+        'http://localhost:5000'
+    ]
 
 # Admin panel route  
 @app.get("/admin")
