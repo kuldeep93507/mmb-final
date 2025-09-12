@@ -32,6 +32,8 @@ import AdminProfile from "./pages/Admin/AdminProfile";
 import AdminBlogs from "./pages/Admin/AdminBlogs";
 import AdminTestimonials from "./pages/Admin/AdminTestimonials";
 import AdminMedia from "./pages/Admin/AdminMedia";
+import AdminOffers from "./pages/Admin/AdminOffers";
+import AdminAppearance from "./pages/Admin/AdminAppearance";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -191,6 +193,8 @@ function App() {
               <Route path="blogs" element={<AdminBlogs />} />
               <Route path="testimonials" element={<AdminTestimonials />} />
               <Route path="media" element={<AdminMedia />} />
+              <Route path="offers" element={<AdminOffers />} />
+              <Route path="appearance" element={<AdminAppearance />} />
             </Route>
 
             {/* Redirect /admin to /admin/dashboard */}

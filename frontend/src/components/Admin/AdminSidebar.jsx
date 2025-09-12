@@ -13,7 +13,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Home,
-  BarChart3
+  BarChart3,
+  Gift,
+  Palette,
+  Inbox
 } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
@@ -23,54 +26,96 @@ const AdminSidebar = () => {
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const menuItems = [
+  const menuSections = [
     {
-      title: 'Dashboard',
-      path: '/admin/dashboard',
-      icon: LayoutDashboard,
-      badge: null
+      title: 'Overview',
+      items: [
+        {
+          title: 'Dashboard',
+          path: '/admin/dashboard',
+          icon: LayoutDashboard,
+          badge: null
+        }
+      ]
     },
     {
-      title: 'Services',
-      path: '/admin/services',
-      icon: Briefcase,
-      badge: null
+      title: 'Content Management',
+      items: [
+        {
+          title: 'Projects',
+          path: '/admin/projects',
+          icon: FolderOpen,
+          badge: null
+        },
+        {
+          title: 'Services',
+          path: '/admin/services',
+          icon: Briefcase,
+          badge: null
+        },
+        {
+          title: 'Blog Posts',
+          path: '/admin/blogs',
+          icon: FileText,
+          badge: 'Draft'
+        },
+        {
+          title: 'Testimonials',
+          path: '/admin/testimonials',
+          icon: MessageSquare,
+          badge: null
+        }
+      ]
     },
     {
-      title: 'Projects',
-      path: '/admin/projects',
-      icon: FolderOpen,
-      badge: null
+      title: 'Media & Branding',
+      items: [
+        {
+          title: 'Media Manager',
+          path: '/admin/media',
+          icon: Image,
+          badge: null
+        },
+        {
+          title: 'Appearance',
+          path: '/admin/appearance',
+          icon: Palette,
+          badge: null
+        }
+      ]
     },
     {
-      title: 'Testimonials',
-      path: '/admin/testimonials',
-      icon: MessageSquare,
-      badge: null
+      title: 'Marketing',
+      items: [
+        {
+          title: 'Offers & Promotions',
+          path: '/admin/offers',
+          icon: Gift,
+          badge: null
+        }
+      ]
     },
     {
-      title: 'Blog Posts',
-      path: '/admin/blogs',
-      icon: FileText,
-      badge: 'Draft'
+      title: 'Communications',
+      items: [
+        {
+          title: 'Contact Inquiries',
+          path: '/admin/contacts',
+          icon: Inbox,
+          badge: '3'
+        }
+      ]
     },
     {
-      title: 'Contact Inquiries',
-      path: '/admin/contacts',
-      icon: Mail,
-      badge: '3'
-    },
-    {
-      title: 'Media Manager',
-      path: '/admin/media',
-      icon: Image,
-      badge: null
-    },
-    {
-      title: 'Profile Settings',
-      path: '/admin/profile',
-      icon: User,
-      badge: null
+      title: 'Account',
+      items: [
+        {
+          title: 'Profile Settings',
+          path: '/admin/profile',
+          icon: User,
+          badge: null
+        }
+      ]
     }
   ];
 
@@ -168,42 +213,24 @@ const AdminSidebar = () => {
       </div>
 
       {/* Navigation */}
-      <nav className={`flex-1 ${isCollapsed ? 'py-4 px-2' : 'py-6 px-4'} transition-all duration-300`}>
-        <div className="space-y-2">
-          {!isCollapsed && (
-            <div className="px-3 mb-4">
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Main Menu
-              </h3>
+      <nav className={`flex-1 ${isCollapsed ? 'py-4 px-2' : 'py-6 px-4'} transition-all duration-300 overflow-y-auto`}>
+        <div className="space-y-1">
+          {menuSections.map((section, sectionIndex) => (
+            <div key={section.title}>
+              {!isCollapsed && (
+                <div className="px-3 mb-3 mt-6 first:mt-0">
+                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    {section.title}
+                  </h3>
+                </div>
+              )}
+              
+              <div className="space-y-1">
+                {section.items.map((item) => (
+                  <SidebarItem key={item.path} item={item} />
+                ))}
+              </div>
             </div>
-          )}
-          
-          {menuItems.slice(0, 4).map((item) => (
-            <SidebarItem key={item.path} item={item} />
-          ))}
-          
-          {!isCollapsed && (
-            <div className="px-3 mt-8 mb-4">
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Content
-              </h3>
-            </div>
-          )}
-          
-          {menuItems.slice(4, 7).map((item) => (
-            <SidebarItem key={item.path} item={item} />
-          ))}
-          
-          {!isCollapsed && (
-            <div className="px-3 mt-8 mb-4">
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Settings
-              </h3>
-            </div>
-          )}
-          
-          {menuItems.slice(7).map((item) => (
-            <SidebarItem key={item.path} item={item} />
           ))}
         </div>
       </nav>
