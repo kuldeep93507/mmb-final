@@ -360,6 +360,7 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     import uvicorn
-    # Use 8080 for Cloud Run compatibility, 5000 for development
-    port = int(os.getenv("PORT", 8080 if os.getenv("CLOUD_RUN_SERVICE") else 5000))
+    # Use PORT environment variable for deployment, 5000 for development
+    port = int(os.getenv("PORT", 5000))
+    logger.info(f"Starting server on port {port}")
     uvicorn.run(app, host="0.0.0.0", port=port)
