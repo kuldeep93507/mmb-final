@@ -2,9 +2,9 @@
   {
     "id": "main",
     "offers_enabled": true,
-    "site_title": "kuldeep parjapati",
+    "site_title": "MMB PORTFOLIO",
     "site_description": "Professional Portfolio Website",
-    "header_tagline": "",
+    "header_tagline": "WEB SOLUTION",
     "primary_color": "#3b82f6",
     "secondary_color": "#1e40af",
     "accent_color": "#ef4444",
@@ -15,6 +15,6 @@
     "contact_phone": null,
     "whatsapp_number": null,
     "google_analytics_id": null,
-    "updated_at": "2025-09-12T15:18:12.715110"
+    "updated_at": "2025-09-12T15:31:15.357656"
   }
 ]
