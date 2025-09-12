@@ -141,6 +141,49 @@ async def update_admin_profile(profile_data: AdminProfileUpdate, current_admin: 
     return {"admin": AdminResponse(**updated_admin)}
 
 # Media Management Endpoints
+@admin_router.get("/media-settings")
+async def get_media_settings(current_admin: dict = Depends(get_current_admin)):
+    """Get current media settings"""
+    try:
+        media_data = await db.media_settings.find_one({"id": "main"})
+        if not media_data:
+            # Return default empty settings
+            default_settings = {
+                "id": "main",
+                "logo": None,
+                "favicon": None,
+                "hero_image": None,
+                "about_image": None,
+                "gallery": []
+            }
+            await db.media_settings.insert_one(default_settings)
+            return default_settings
+        return media_data
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch media settings: {str(e)}"
+        )
+
+@admin_router.put("/media-settings")
+async def update_media_settings(
+    settings: dict,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Update media settings"""
+    try:
+        result = await db.media_settings.update_one(
+            {"id": "main"},
+            {"$set": settings},
+            upsert=True
+        )
+        return {"message": "Media settings updated successfully"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update media settings: {str(e)}"
+        )
+
 @admin_router.post("/upload-media")
 async def upload_media(
     file: UploadFile = File(...),

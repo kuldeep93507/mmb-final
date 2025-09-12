@@ -211,3 +211,117 @@ class DashboardStats(BaseModel):
     published_blogs: int
     total_blogs: int
     recent_contacts: List[ContactInquiry]
+
+# Enhanced Media Settings Models
+class MediaSettingsResponse(BaseModel):
+    id: str = "main"
+    logo: Optional[str] = None
+    favicon: Optional[str] = None
+    hero_image: Optional[str] = None
+    about_image: Optional[str] = None
+    gallery: List[str] = []
+
+class MediaSettingsUpdate(BaseModel):
+    logo: Optional[str] = None
+    favicon: Optional[str] = None
+    hero_image: Optional[str] = None
+    about_image: Optional[str] = None
+    gallery: Optional[List[str]] = None
+
+# Offer System Models
+class Offer(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    subtitle: Optional[str] = None
+    description: Optional[str] = None
+    cta_text: str = "Get Offer"
+    cta_url: Optional[str] = None
+    discount_percentage: Optional[int] = None
+    discount_amount: Optional[str] = None
+    active: bool = True
+    starts_at: Optional[datetime] = None
+    ends_at: Optional[datetime] = None
+    priority: int = 1
+    background_color: str = "#ff6b6b"
+    text_color: str = "#ffffff"
+    banner_image: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = None
+
+class OfferCreate(BaseModel):
+    title: str
+    subtitle: Optional[str] = None
+    description: Optional[str] = None
+    cta_text: str = "Get Offer"
+    cta_url: Optional[str] = None
+    discount_percentage: Optional[int] = None
+    discount_amount: Optional[str] = None
+    active: bool = True
+    starts_at: Optional[datetime] = None
+    ends_at: Optional[datetime] = None
+    priority: int = 1
+    background_color: str = "#ff6b6b"
+    text_color: str = "#ffffff"
+    banner_image: Optional[str] = None
+
+class OfferUpdate(BaseModel):
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    description: Optional[str] = None
+    cta_text: Optional[str] = None
+    cta_url: Optional[str] = None
+    discount_percentage: Optional[int] = None
+    discount_amount: Optional[str] = None
+    active: Optional[bool] = None
+    starts_at: Optional[datetime] = None
+    ends_at: Optional[datetime] = None
+    priority: Optional[int] = None
+    background_color: Optional[str] = None
+    text_color: Optional[str] = None
+    banner_image: Optional[str] = None
+
+# Site Settings Models
+class NavLink(BaseModel):
+    label: str
+    url: str
+    external: bool = False
+    order: int = 1
+
+class SocialLink(BaseModel):
+    platform: str  # facebook, twitter, instagram, linkedin, github, etc.
+    url: str
+    icon: Optional[str] = None
+
+class SiteSettings(BaseModel):
+    id: str = "main"
+    offers_enabled: bool = True
+    site_title: str = "MMB Portfolio"
+    site_description: str = "Professional Portfolio Website"
+    header_tagline: Optional[str] = None
+    primary_color: str = "#3b82f6"
+    secondary_color: str = "#1e40af"
+    accent_color: str = "#ef4444"
+    nav_links: List[NavLink] = []
+    social_links: List[SocialLink] = []
+    footer_text: str = "© 2024 MMB Portfolio. All rights reserved."
+    contact_email: Optional[str] = None
+    contact_phone: Optional[str] = None
+    whatsapp_number: Optional[str] = None
+    google_analytics_id: Optional[str] = None
+    updated_at: Optional[datetime] = None
+
+class SiteSettingsUpdate(BaseModel):
+    offers_enabled: Optional[bool] = None
+    site_title: Optional[str] = None
+    site_description: Optional[str] = None
+    header_tagline: Optional[str] = None
+    primary_color: Optional[str] = None
+    secondary_color: Optional[str] = None
+    accent_color: Optional[str] = None
+    nav_links: Optional[List[NavLink]] = None
+    social_links: Optional[List[SocialLink]] = None
+    footer_text: Optional[str] = None
+    contact_email: Optional[str] = None
+    contact_phone: Optional[str] = None
+    whatsapp_number: Optional[str] = None
+    google_analytics_id: Optional[str] = None

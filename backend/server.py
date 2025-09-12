@@ -256,6 +256,9 @@ db.testimonials = db.get_collection('testimonials')
 db.blogs = db.get_collection('blogs')
 db.contacts = db.get_collection('contacts')
 db.profiles = db.get_collection('profiles')
+db.media_settings = db.get_collection('media_settings')
+db.site_settings = db.get_collection('site_settings')
+db.offers = db.get_collection('offers')
 
 # Inject database into route modules
 import admin_routes
