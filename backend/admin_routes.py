@@ -46,7 +46,12 @@ async def admin_login(login_data: AdminLogin):
             detail="Invalid credentials"
         )
     
-    token = create_access_token({"sub": admin["id"], "email": admin["email"]})
+    token_version = admin.get("token_version", 1)
+    token = create_access_token({
+        "sub": admin["id"], 
+        "email": admin["email"],
+        "token_version": token_version
+    })
     return {
         "access_token": token,
         "token_type": "bearer",
@@ -81,11 +86,17 @@ async def change_password(password_data: ChangePasswordRequest, current_admin: d
             detail="New password must be at least 6 characters long"
         )
     
-    # Hash new password and update
+    # Hash new password and increment token_version to invalidate existing tokens
     new_hashed_password = hash_password(password_data.new_password)
+    current_token_version = admin.get("token_version", 1)
+    new_token_version = current_token_version + 1
+    
     await db.admins.update_one(
         {"id": current_admin["id"]}, 
-        {"$set": {"password": new_hashed_password}}
+        {"$set": {
+            "password": new_hashed_password,
+            "token_version": new_token_version
+        }}
     )
     
     return {"message": "Password changed successfully"}

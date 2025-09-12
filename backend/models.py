@@ -10,6 +10,7 @@ class Admin(BaseModel):
     password: str
     name: str
     role: str = "admin"
+    token_version: int = 1
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class AdminLogin(BaseModel):
