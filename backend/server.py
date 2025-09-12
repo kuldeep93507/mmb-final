@@ -280,6 +280,11 @@ app.include_router(admin_router)
 app.include_router(public_router)
 app.include_router(profile_router)
 
+# Mount frontend static files (React build) - this should be last
+frontend_build_dir = ROOT_DIR.parent / "frontend" / "build"
+if frontend_build_dir.exists():
+    app.mount("/", StaticFiles(directory=str(frontend_build_dir), html=True), name="frontend")
+
 # Get CORS origins from environment - avoid wildcard for security
 cors_origins_env = os.getenv('CORS_ORIGINS', '')
 if cors_origins_env:
@@ -291,22 +296,15 @@ else:
         'http://localhost:5000'
     ]
 
-# Admin panel route  
-@app.get("/admin")
-async def admin_panel():
-    frontend_url = os.getenv('FRONTEND_URL', 'https://c8c5ce43-b358-4b41-9b87-8a58609f42a6-00-kmxcabryim7l.kirk.replit.dev')
-    return {"message": f"Admin Panel - Please use frontend at {frontend_url}/admin/login"}
-
-# Legacy route for compatibility
+# API info route
 @app.get("/api/")
-async def root():
-    return {"message": "MMB Portfolio API - Admin Panel Ready"}
+async def api_info():
+    return {"message": "MMB Portfolio API - Backend Server Running", "docs": "/docs", "version": "1.0.0"}
 
-# Root route
-@app.get("/")
-async def home():
-    frontend_url = os.getenv('FRONTEND_URL', 'https://c8c5ce43-b358-4b41-9b87-8a58609f42a6-00-kmxcabryim7l.kirk.replit.dev')
-    return {"message": "MMB Portfolio API - Backend Server Running", "admin_panel": f"{frontend_url}/admin/login", "api_docs": "/docs"}
+# Health check for API
+@app.get("/api/health")
+async def health_check():
+    return {"status": "healthy", "message": "MMB Portfolio API is running"}
 
 app.add_middleware(
     CORSMiddleware,
