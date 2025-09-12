@@ -21,7 +21,7 @@ export const ProfileProvider = ({ children }) => {
       setLoading(true);
       setError(null);
       
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
       const response = await axios.get(`${backendUrl}/api/profile`);
       
       setProfile(response.data);

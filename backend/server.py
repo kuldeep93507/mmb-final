@@ -283,7 +283,33 @@ app.include_router(profile_router)
 # Mount frontend static files (React build) - this should be last
 frontend_build_dir = ROOT_DIR.parent / "frontend" / "build"
 if frontend_build_dir.exists():
-    app.mount("/", StaticFiles(directory=str(frontend_build_dir), html=True), name="frontend")
+    # Mount static assets (JS, CSS, images, etc.)
+    app.mount("/static", StaticFiles(directory=str(frontend_build_dir / "static")), name="static")
+    
+    # Serve index.html for root path
+    @app.get("/")
+    async def serve_frontend():
+        from fastapi.responses import FileResponse
+        return FileResponse(str(frontend_build_dir / "index.html"))
+    
+    # SPA fallback route - serve index.html for any non-API routes
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        from fastapi.responses import FileResponse
+        
+        # Don't intercept API routes, uploads, or docs (handle both with and without trailing slash)
+        if (full_path.startswith(('api/', 'uploads/', 'docs/', 'redoc/')) or 
+            full_path in ('api', 'uploads', 'docs', 'redoc', 'openapi.json')):
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404, detail="Not found")
+        
+        # Check if it's a static file that exists
+        static_file_path = frontend_build_dir / full_path
+        if static_file_path.exists() and static_file_path.is_file():
+            return FileResponse(str(static_file_path))
+        
+        # For all other routes (React SPA routes), serve index.html
+        return FileResponse(str(frontend_build_dir / "index.html"))
 
 # Get CORS origins from environment - avoid wildcard for security
 cors_origins_env = os.getenv('CORS_ORIGINS', '')
@@ -325,4 +351,5 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

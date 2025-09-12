@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Calendar, Clock, User, Search, Tag, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const Blog = () => {

@@ -10,7 +10,7 @@ import { Mail, Phone, MapPin, Send, MessageCircle, Clock, CheckCircle } from 'lu
 import axios from 'axios';
 import { useProfile } from '../context/ProfileContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 const Contact = () => {
   const { profile, loading } = useProfile();

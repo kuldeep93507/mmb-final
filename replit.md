@@ -5,15 +5,16 @@ This is a full-stack portfolio website featuring a React frontend and FastAPI ba
 
 ## Recent Changes
 - **Date**: September 12, 2025
-- Configured for Replit environment with proper host configurations
-- Updated ports: Frontend (5000), Backend (8000)
-- Set up CORS for cross-origin communication
-- Configured workflows for both frontend and backend
-- Added deployment configuration for autoscale
-- **Deployment Fixes Applied**:
+- **Deployment Configuration Completed**:
+  - Configured unified production workflow serving both frontend and backend on port 5000
+  - Updated backend server.py to use PORT environment variable for flexible deployment
+  - Backend now serves built React files as static content for production deployment
+  - Removed separate frontend/backend workflows in favor of unified deployment
+  - Optimized for Replit's webview requirements (port 5000 with webview output)
+- **Previous Fixes Applied**:
+  - Configured for Replit environment with proper host configurations
+  - Set up CORS for cross-origin communication  
   - Removed packageManager field from frontend/package.json to fix npm installation issues
-  - Updated root package.json start command to default to PORT 5000 for deployment
-  - Verified build and install commands properly target frontend directory
   - Resolved "Invalid Version" errors in deployment process
 
 ## Project Architecture
@@ -50,9 +51,11 @@ JWT_SECRET=mmb-portfolio-jwt-secret-key-for-replit-dev
 DB_NAME=mmb_portfolio
 ```
 
-## Workflows
-1. **Frontend**: `cd frontend && npm start` - Serves React app on port 5000
-2. **Backend**: `cd backend && python server.py` - Serves API on port 8000
+## Deployment Configuration
+**Production Workflow**: `cd backend && PORT=5000 python server.py`
+- Unified deployment serving both frontend and backend on port 5000
+- Backend serves built React files as static content
+- Optimized for Replit's autoscale deployment requirements
 
 ## Admin Access
 - **URL**: https://[replit-domain]/admin/login
