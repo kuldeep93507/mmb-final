@@ -313,7 +313,7 @@ async def update_site_settings(
 async def get_offers(current_admin: dict = Depends(get_current_admin)):
     """Get all offers"""
     try:
-        offers = await db.offers.find({}).to_list(length=None)
+        offers = await db.offers.find({}).to_list()
         return offers
     except Exception as e:
         raise HTTPException(

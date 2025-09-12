@@ -182,8 +182,10 @@ async def get_public_site_settings():
                 "contact_phone": None,
                 "whatsapp_number": None
             }
-        # Remove sensitive fields for public consumption
-        public_settings = {k: v for k, v in settings.items() if k not in ['google_analytics_id', 'updated_at']}
+        
+        # Properly filter sensitive fields for public consumption
+        sensitive_fields = ['google_analytics_id', 'updated_at', '_id']
+        public_settings = {k: v for k, v in settings.items() if k not in sensitive_fields}
         return public_settings
     except Exception as e:
         raise HTTPException(
@@ -198,23 +200,48 @@ async def get_active_offers():
         # Get current time
         now = datetime.utcnow()
         
-        # Find active offers within their time range
-        query = {
-            "active": True,
-            "$or": [
-                {"starts_at": {"$lte": now}, "ends_at": {"$gte": now}},
-                {"starts_at": None, "ends_at": None},
-                {"starts_at": {"$lte": now}, "ends_at": None},
-                {"starts_at": None, "ends_at": {"$gte": now}}
-            ]
-        }
+        # Get all active offers (MockDB compatible)
+        all_offers = await db.offers.find({"active": True}).to_list()
         
-        offers = await db.offers.find(query).to_list(length=None)
+        # Filter by time range in Python (MockDB compatible)
+        active_offers = []
+        for offer in all_offers:
+            # Parse datetime strings if they exist
+            starts_at = None
+            ends_at = None
+            
+            if offer.get('starts_at'):
+                if isinstance(offer['starts_at'], str):
+                    try:
+                        starts_at = datetime.fromisoformat(offer['starts_at'].replace('Z', '+00:00'))
+                    except:
+                        starts_at = None
+                else:
+                    starts_at = offer['starts_at']
+            
+            if offer.get('ends_at'):
+                if isinstance(offer['ends_at'], str):
+                    try:
+                        ends_at = datetime.fromisoformat(offer['ends_at'].replace('Z', '+00:00'))
+                    except:
+                        ends_at = None
+                else:
+                    ends_at = offer['ends_at']
+            
+            # Check if offer is within time range
+            is_active = True
+            if starts_at and now < starts_at:
+                is_active = False
+            if ends_at and now > ends_at:
+                is_active = False
+                
+            if is_active:
+                active_offers.append(offer)
         
         # Sort by priority (higher priority first)
-        offers.sort(key=lambda x: x.get('priority', 1), reverse=True)
+        active_offers.sort(key=lambda x: x.get('priority', 1), reverse=True)
         
-        return offers
+        return active_offers
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -225,7 +252,7 @@ async def get_active_offers():
 async def get_public_offers():
     """Get all public offers (for display purposes)"""
     try:
-        offers = await db.offers.find({"active": True}).to_list(length=None)
+        offers = await db.offers.find({"active": True}).to_list()
         # Sort by priority (higher priority first)
         offers.sort(key=lambda x: x.get('priority', 1), reverse=True)
         return offers
