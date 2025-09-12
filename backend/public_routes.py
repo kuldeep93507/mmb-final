@@ -58,8 +58,14 @@ async def submit_contact(contact_data: ContactCreate):
 # Public Profile/Contact Info API
 @public_router.get("/profile")
 async def get_public_profile():
-    # Get the first admin's profile
-    admin = await db.admins.find_one({})
+    # Get the most recent admin's profile (latest created/updated)
+    admins = await db.admins.find({}).to_list()
+    if not admins:
+        admin = None
+    else:
+        # Sort by created_at descending to get the latest
+        admins.sort(key=lambda x: x.get('created_at', ''), reverse=True)
+        admin = admins[0]
     if not admin:
         return {
             "name": "Kuldeep Parjapati",
