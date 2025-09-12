@@ -79,7 +79,7 @@ const AdminProfile = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('admin_token');
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/admin/profile`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/admin/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -160,7 +160,7 @@ const AdminProfile = () => {
       setSaving(true);
       const token = localStorage.getItem('admin_token');
       
-      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/admin/profile`, profileData, {
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/admin/profile`, profileData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -218,7 +218,7 @@ const AdminProfile = () => {
       setSaving(true);
       const token = localStorage.getItem('admin_token');
       
-      await axios.put(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/admin/change-password`, {
+      await axios.put(`${process.env.REACT_APP_BACKEND_URL || "http://localhost:8000"}/api/admin/change-password`, {
         current_password: passwordData.currentPassword,
         new_password: passwordData.newPassword
       }, {

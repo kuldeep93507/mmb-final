@@ -27,8 +27,8 @@ import { useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess, apiCall } from '../../utils/errorHandler';
 import { LoadingWrapper, StatsLoading, PageLoading } from '../../components/ui/loading';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : '/api';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);

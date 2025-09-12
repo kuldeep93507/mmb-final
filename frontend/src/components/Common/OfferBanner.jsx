@@ -3,8 +3,8 @@ import { Button } from '../ui/button';
 import { X, Gift, Clock, Percent, ExternalLink } from 'lucide-react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : '/api';
 
 const OfferBanner = () => {
   const [offer, setOffer] = useState(null);

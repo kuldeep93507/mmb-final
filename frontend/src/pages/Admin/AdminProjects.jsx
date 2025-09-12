@@ -13,8 +13,8 @@ import { useAuth } from '../../context/AuthContext';
 import { handleError, handleSuccess, apiCall, handleValidationErrors } from '../../utils/errorHandler';
 import { LoadingWrapper, CardLoading, ButtonLoading, EmptyState } from '../../components/ui/loading';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
 
 const AdminProjects = () => {
   const [projects, setProjects] = useState([]);
