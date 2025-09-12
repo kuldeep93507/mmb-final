@@ -22,7 +22,8 @@ export const ProfileProvider = ({ children }) => {
       setError(null);
       
       const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
-      const response = await axios.get(`${backendUrl}/api/profile`);
+      const apiUrl = backendUrl ? `${backendUrl}/api/profile` : '/api/profile';
+      const response = await axios.get(apiUrl);
       
       setProfile(response.data);
     } catch (err) {

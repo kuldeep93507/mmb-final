@@ -5,8 +5,8 @@ import { Button } from '../components/ui/button';
 import { ExternalLink, Github, Filter } from 'lucide-react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : '/api';
 
 const Portfolio = () => {
   const [projects, setProjects] = useState([]);

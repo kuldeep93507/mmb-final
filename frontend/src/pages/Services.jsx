@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { CheckCircle, Globe, Layout, Palette, Code, PenTool, TrendingUp, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : '/api';
 
 const Services = () => {
   const [services, setServices] = useState([]);
