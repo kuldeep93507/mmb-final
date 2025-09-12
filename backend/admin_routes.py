@@ -295,7 +295,7 @@ async def update_site_settings(
 ):
     """Update site settings"""
     try:
-        settings["updated_at"] = datetime.utcnow()
+        settings["updated_at"] = datetime.utcnow().isoformat()
         result = await db.site_settings.update_one(
             {"id": "main"},
             {"$set": settings},
@@ -368,7 +368,7 @@ async def update_offer(
 ):
     """Update offer"""
     try:
-        offer_data["updated_at"] = datetime.utcnow()
+        offer_data["updated_at"] = datetime.utcnow().isoformat()
         result = await db.offers.update_one(
             {"id": offer_id},
             {"$set": offer_data}
@@ -404,7 +404,7 @@ async def toggle_offer(
         new_status = not offer.get("active", False)
         result = await db.offers.update_one(
             {"id": offer_id},
-            {"$set": {"active": new_status, "updated_at": datetime.utcnow()}}
+            {"$set": {"active": new_status, "updated_at": datetime.utcnow().isoformat()}}
         )
         return {"message": f"Offer {'activated' if new_status else 'deactivated'} successfully", "active": new_status}
     except HTTPException:

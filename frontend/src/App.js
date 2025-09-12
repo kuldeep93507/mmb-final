@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ProfileProvider } from "./context/ProfileContext";
+import { SiteSettingsProvider } from "./context/SiteSettingsContext";
 
 // Layout Components
 import Header from "./components/Layout/Header";
@@ -71,6 +72,7 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <ProfileProvider>
+            <SiteSettingsProvider>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={
@@ -201,6 +203,7 @@ function App() {
             <Route path="/admin/*" element={<Navigate to="/admin/dashboard" />} />
           </Routes>
           <Toaster />
+            </SiteSettingsProvider>
           </ProfileProvider>
         </AuthProvider>
       </BrowserRouter>

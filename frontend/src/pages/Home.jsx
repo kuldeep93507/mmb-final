@@ -5,12 +5,14 @@ import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { ArrowRight, Star, Globe, Layout, Palette, Code, PenTool, TrendingUp, Users, CheckCircle, Award, Target, ExternalLink } from 'lucide-react';
 import axios from 'axios';
+import { useSiteSettings } from '../context/SiteSettingsContext';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const Home = () => {
   const navigate = useNavigate();
+  const { siteSettings, getHeroImageUrl, getThemeColors } = useSiteSettings();
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
@@ -58,17 +60,22 @@ const Home = () => {
               <div className="space-y-6">
                 <div className="space-y-4">
                   <h1 className="text-lg text-gray-600 font-medium">
-                    👋 Hello, I'm Kuldeep Parjapati
+                    👋 Hello, I'm {siteSettings?.site_title || 'Kuldeep Parjapati'}
                   </h1>
                   
-                  <h2 className="text-6xl lg:text-7xl font-bold text-black leading-tight">
+                  <h2 
+                    className="text-6xl lg:text-7xl font-bold text-black leading-tight"
+                    style={{ 
+                      color: getThemeColors().primary
+                    }}
+                  >
                     I Create<br />
-                    <span className="text-blue-600">Digital Solutions</span><br />
+                    <span style={{ color: getThemeColors().secondary }}>Digital Solutions</span><br />
                     That Convert
                   </h2>
                   
                   <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-                    I design modern websites that convert visitors into customers
+                    {siteSettings?.site_description || 'I design modern websites that convert visitors into customers'}
                   </p>
                 </div>
                 
