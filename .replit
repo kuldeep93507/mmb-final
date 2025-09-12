@@ -42,6 +42,10 @@ externalPort = 8000
 localPort = 8001
 externalPort = 3001
 
+[[ports]]
+localPort = 40315
+externalPort = 3000
+
 [deployment]
 deploymentTarget = "autoscale"
 run = ["bash", "-c", "cd backend && python server.py"]
