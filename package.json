@@ -7,8 +7,8 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "pip install -r backend/requirements.txt",
     "install": "npm run install:frontend && npm run install:backend",
-    "build": "cd frontend && npm install && npm run build",
-    "start": "uv run uvicorn backend.server:app --host 0.0.0.0 --port ${PORT:-5000}",
+    "build": "npm run install && cd frontend && npm run build && rm -rf ../backend/static_files && cp -r build ../backend/static_files",
+    "start": "cd backend && python server.py",
     "start:backend": "cd backend && python server.py",
     "start:frontend": "cd frontend && npm start",
     "dev:backend": "cd backend && uvicorn server:app --host 0.0.0.0 --port 8001 --reload",
@@ -17,9 +17,6 @@
     "test:frontend": "cd frontend && npm test",
     "test": "npm run test:frontend"
   },
-  "workspaces": [
-    "frontend"
-  ],
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
