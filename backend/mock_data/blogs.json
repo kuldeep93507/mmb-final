@@ -55,24 +55,5 @@
     "published": true,
     "read_time": "8 min read",
     "created_at": "2025-09-12T08:56:30.025068"
-  },
-  {
-    "id": "f8a9a9b0-1949-47bc-a115-0c3f7dee1a1b",
-    "title": "Node.js Best Practices for Production Applications",
-    "excerpt": "Essential Node.js best practices, security considerations, and performance optimizations for building scalable backend applications in production.",
-    "content": "<h2>Node.js Production Best Practices</h2><p>Building production-ready Node.js applications requires...</p>",
-    "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
-    "category": "Node.js",
-    "tags": [
-      "Node.js",
-      "Backend",
-      "JavaScript",
-      "Best Practices"
-    ],
-    "author": "MMB",
-    "publish_date": "2025-09-12T08:56:30.025122",
-    "published": false,
-    "read_time": "15 min read",
-    "created_at": "2025-09-12T08:56:30.025124"
   }
 ]
