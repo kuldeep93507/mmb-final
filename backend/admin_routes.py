@@ -269,6 +269,174 @@ async def remove_media(
             detail=f"Failed to remove media: {str(e)}"
         )
 
+# Site Settings Endpoints
+@admin_router.get("/site-settings")
+async def get_site_settings(current_admin: dict = Depends(get_current_admin)):
+    """Get current site settings"""
+    try:
+        settings = await db.site_settings.find_one({"id": "main"})
+        if not settings:
+            # Create default settings
+            from models import SiteSettings
+            default_settings = SiteSettings().dict()
+            await db.site_settings.insert_one(default_settings)
+            return default_settings
+        return settings
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch site settings: {str(e)}"
+        )
+
+@admin_router.put("/site-settings")
+async def update_site_settings(
+    settings: dict,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Update site settings"""
+    try:
+        settings["updated_at"] = datetime.utcnow()
+        result = await db.site_settings.update_one(
+            {"id": "main"},
+            {"$set": settings},
+            upsert=True
+        )
+        return {"message": "Site settings updated successfully"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update site settings: {str(e)}"
+        )
+
+# Offers Management Endpoints
+@admin_router.get("/offers")
+async def get_offers(current_admin: dict = Depends(get_current_admin)):
+    """Get all offers"""
+    try:
+        offers = await db.offers.find({}).to_list(length=None)
+        return offers
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch offers: {str(e)}"
+        )
+
+@admin_router.post("/offers")
+async def create_offer(
+    offer_data: dict,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Create new offer"""
+    try:
+        from models import Offer
+        offer = Offer(**offer_data)
+        result = await db.offers.insert_one(offer.dict())
+        return {"message": "Offer created successfully", "id": offer.id}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create offer: {str(e)}"
+        )
+
+@admin_router.get("/offers/{offer_id}")
+async def get_offer(
+    offer_id: str,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Get specific offer"""
+    try:
+        offer = await db.offers.find_one({"id": offer_id})
+        if not offer:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Offer not found"
+            )
+        return offer
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch offer: {str(e)}"
+        )
+
+@admin_router.put("/offers/{offer_id}")
+async def update_offer(
+    offer_id: str,
+    offer_data: dict,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Update offer"""
+    try:
+        offer_data["updated_at"] = datetime.utcnow()
+        result = await db.offers.update_one(
+            {"id": offer_id},
+            {"$set": offer_data}
+        )
+        if result.matched_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Offer not found"
+            )
+        return {"message": "Offer updated successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update offer: {str(e)}"
+        )
+
+@admin_router.patch("/offers/{offer_id}/toggle")
+async def toggle_offer(
+    offer_id: str,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Toggle offer active status"""
+    try:
+        offer = await db.offers.find_one({"id": offer_id})
+        if not offer:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Offer not found"
+            )
+        
+        new_status = not offer.get("active", False)
+        result = await db.offers.update_one(
+            {"id": offer_id},
+            {"$set": {"active": new_status, "updated_at": datetime.utcnow()}}
+        )
+        return {"message": f"Offer {'activated' if new_status else 'deactivated'} successfully", "active": new_status}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to toggle offer: {str(e)}"
+        )
+
+@admin_router.delete("/offers/{offer_id}")
+async def delete_offer(
+    offer_id: str,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Delete offer"""
+    try:
+        result = await db.offers.delete_one({"id": offer_id})
+        if result.deleted_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Offer not found"
+            )
+        return {"message": "Offer deleted successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete offer: {str(e)}"
+        )
+
 # Services Management
 @admin_router.get("/services", response_model=List[Service])
 async def get_services(current_admin: dict = Depends(get_current_admin)):

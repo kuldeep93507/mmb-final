@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from models import *
+from datetime import datetime
 # MongoDB import removed - using mock database
 import os
 from dotenv import load_dotenv
@@ -134,3 +135,102 @@ async def get_media_settings():
             "about_image": "", 
             "favicon": ""
         }
+
+# Enhanced Public Endpoints for New Features
+
+@public_router.get("/media-settings")
+async def get_public_media_settings():
+    """Get public media settings with gallery"""
+    try:
+        media_data = await db.media_settings.find_one({"id": "main"})
+        if not media_data:
+            return {
+                "id": "main",
+                "logo": None,
+                "favicon": None,
+                "hero_image": None,
+                "about_image": None,
+                "gallery": []
+            }
+        return media_data
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch media settings: {str(e)}"
+        )
+
+@public_router.get("/site-settings")
+async def get_public_site_settings():
+    """Get public site settings"""
+    try:
+        settings = await db.site_settings.find_one({"id": "main"})
+        if not settings:
+            # Return default settings
+            return {
+                "id": "main",
+                "offers_enabled": True,
+                "site_title": "MMB Portfolio",
+                "site_description": "Professional Portfolio Website",
+                "header_tagline": None,
+                "primary_color": "#3b82f6",
+                "secondary_color": "#1e40af",
+                "accent_color": "#ef4444",
+                "nav_links": [],
+                "social_links": [],
+                "footer_text": "© 2024 MMB Portfolio. All rights reserved.",
+                "contact_email": None,
+                "contact_phone": None,
+                "whatsapp_number": None
+            }
+        # Remove sensitive fields for public consumption
+        public_settings = {k: v for k, v in settings.items() if k not in ['google_analytics_id', 'updated_at']}
+        return public_settings
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch site settings: {str(e)}"
+        )
+
+@public_router.get("/offers/active")
+async def get_active_offers():
+    """Get currently active offers"""
+    try:
+        # Get current time
+        now = datetime.utcnow()
+        
+        # Find active offers within their time range
+        query = {
+            "active": True,
+            "$or": [
+                {"starts_at": {"$lte": now}, "ends_at": {"$gte": now}},
+                {"starts_at": None, "ends_at": None},
+                {"starts_at": {"$lte": now}, "ends_at": None},
+                {"starts_at": None, "ends_at": {"$gte": now}}
+            ]
+        }
+        
+        offers = await db.offers.find(query).to_list(length=None)
+        
+        # Sort by priority (higher priority first)
+        offers.sort(key=lambda x: x.get('priority', 1), reverse=True)
+        
+        return offers
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch active offers: {str(e)}"
+        )
+
+@public_router.get("/offers")
+async def get_public_offers():
+    """Get all public offers (for display purposes)"""
+    try:
+        offers = await db.offers.find({"active": True}).to_list(length=None)
+        # Sort by priority (higher priority first)
+        offers.sort(key=lambda x: x.get('priority', 1), reverse=True)
+        return offers
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch offers: {str(e)}"
+        )
