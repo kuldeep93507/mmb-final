@@ -16,7 +16,7 @@ services:
       - key: CORS_ORIGINS
         value: https://mmb-portfolio-frontend.onrender.com
       - key: PORT
-        value: 8001
+        value: 5000
 
   # Frontend Static Site
   - type: static

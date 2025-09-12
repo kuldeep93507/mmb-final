@@ -282,7 +282,12 @@ app.include_router(public_router)
 app.include_router(profile_router)
 
 # Mount frontend static files (React build) - this should be last
-frontend_build_dir = ROOT_DIR.parent / "frontend" / "build"
+# For Cloud Run deployment, frontend is copied to backend/static_files
+# For local development, it may be in ../frontend/build
+frontend_build_dir = ROOT_DIR / "static_files"
+if not frontend_build_dir.exists():
+    frontend_build_dir = ROOT_DIR.parent / "frontend" / "build"
+
 if frontend_build_dir.exists():
     # Mount static assets (JS, CSS, images, etc.)
     app.mount("/static", StaticFiles(directory=str(frontend_build_dir / "static")), name="static")
@@ -352,5 +357,6 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.getenv("PORT", 5000))
+    # Use 8080 for Cloud Run compatibility, 5000 for development
+    port = int(os.getenv("PORT", 8080 if os.getenv("CLOUD_RUN_SERVICE") else 5000))
     uvicorn.run(app, host="0.0.0.0", port=port)

@@ -20,8 +20,8 @@ COPY . .
 # Create uploads directory
 RUN mkdir -p uploads
 
-# Expose port
-EXPOSE 8001
+# Expose port (Cloud Run typically uses 8080)
+EXPOSE 8080
 
-# Run the application
-CMD ["python", "server.py"]
+# Run the application with uvicorn for production
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "${PORT:-8080}"]

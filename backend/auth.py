@@ -5,8 +5,10 @@ from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import os
 
-# JWT Configuration
-SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'mmb-admin-secret-key-2024')
+# JWT Configuration - Must be set via environment variable for security
+SECRET_KEY = os.environ.get('JWT_SECRET')
+if not SECRET_KEY:
+    raise RuntimeError("JWT_SECRET environment variable is required but not set")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24
 
@@ -64,9 +66,10 @@ async def get_current_admin(credentials: HTTPAuthorizationCredentials = Depends(
     
     return {"id": admin_id, "email": payload.get("email")}
 
-# Default admin credentials - CHANGE THESE IMMEDIATELY AFTER DEPLOYMENT
+# Default admin credentials - Only used for initial setup in development
+# In production, create admin via environment variables or admin seeding script
 DEFAULT_ADMIN = {
-    "email": "fiewin375@gmail.com",
-    "password": "MMB@2024!Secure",  # This will be hashed
-    "name": "Kuldeep Parjapati"
+    "email": os.environ.get("ADMIN_EMAIL", "admin@example.com"),
+    "password": os.environ.get("ADMIN_PASSWORD", "change-me-immediately"),
+    "name": os.environ.get("ADMIN_NAME", "System Administrator")
 }
