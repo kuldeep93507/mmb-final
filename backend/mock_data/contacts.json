@@ -10,17 +10,5 @@
     "timeline": "3-4 Weeks",
     "read": true,
     "created_at": "2025-09-11T12:31:11.497283"
-  },
-  {
-    "id": "d4bc802a-3ce5-4766-9b54-cd2f15d4b5da",
-    "name": "Kuldeep Parjapati",
-    "email": "dasf@gmail.com",
-    "phone": "dsfa",
-    "project_type": "Web Application",
-    "budget": "Above ₹1,00,000",
-    "message": "safsd",
-    "timeline": "1-2 Weeks",
-    "read": false,
-    "created_at": "2025-09-12T09:58:27.046908"
   }
 ]

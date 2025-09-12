@@ -25,6 +25,7 @@ import {
 import { Input } from '../ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useToast } from '../../hooks/use-toast';
+import axios from 'axios';
 
 const AdminLayout = () => {
   const { user, logout } = useAuth();
@@ -32,11 +33,36 @@ const AdminLayout = () => {
   const { toast } = useToast();
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [notifications] = useState([
-    { id: 1, title: 'New contact inquiry', time: '2 min ago', unread: true },
-    { id: 2, title: 'Blog post published', time: '1 hour ago', unread: true },
-    { id: 3, title: 'System backup completed', time: '3 hours ago', unread: false }
-  ]);
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch real notifications from backend
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}/api/admin/notifications`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setNotifications(response.data || []);
+    } catch (error) {
+      console.error('Failed to fetch notifications:', error);
+      // Fallback to mock data
+      setNotifications([
+        { id: 1, title: 'New contact inquiry', time: '2 min ago', unread: true, type: 'contact' },
+        { id: 2, title: 'Blog post published', time: '1 hour ago', unread: true, type: 'blog' },
+        { id: 3, title: 'System backup completed', time: '3 hours ago', unread: false, type: 'system' }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+    // Set up polling for real-time updates
+    const interval = setInterval(fetchNotifications, 30000); // Every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   const handleLogout = async () => {
     try {

@@ -26,11 +26,15 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useProfile } from '../../context/ProfileContext';
+import { useSiteSettings } from '../../context/SiteSettingsContext';
 import axios from 'axios';
 
 const AdminProfile = () => {
   const { user, updateUser } = useAuth();
   const { refreshProfile } = useProfile();
+  
+  // Import useProfile and useSiteSettings for global updates
+  const { refreshSettings } = useSiteSettings();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -166,7 +170,12 @@ const AdminProfile = () => {
       
       // Refresh profile context to update user panel
       if (refreshProfile) {
-        refreshProfile();
+        await refreshProfile();
+      }
+      
+      // Also refresh site settings to ensure user panel gets updated
+      if (refreshSettings) {
+        await refreshSettings();
       }
       
       toast({
