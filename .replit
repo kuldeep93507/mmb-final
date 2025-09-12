@@ -58,6 +58,10 @@ externalPort = 8000
 localPort = 8001
 externalPort = 3001
 
+[[ports]]
+localPort = 40217
+externalPort = 3000
+
 [deployment]
 deploymentTarget = "autoscale"
 run = ["bash", "-c", "cd backend && python server.py & cd frontend && npm run build && npx serve -s build -p 5000"]
