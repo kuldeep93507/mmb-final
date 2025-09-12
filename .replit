@@ -1,4 +1,4 @@
-modules = ["nodejs-20", "bash", "web", "python-3.11", "python3"]
+modules = ["nodejs-20", "bash", "web", "python-3.11", "python3", "php-8.2"]
 [agent]
 expertMode = true
 
@@ -40,7 +40,6 @@ externalPort = 8000
 
 [[ports]]
 localPort = 8001
-externalPort = 3001
 
 [deployment]
 deploymentTarget = "autoscale"
