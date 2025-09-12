@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, status, File, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 import os
 import uuid
 from pathlib import Path
@@ -314,7 +315,7 @@ async def get_offers(current_admin: dict = Depends(get_current_admin)):
     """Get all offers"""
     try:
         offers = await db.offers.find({}).to_list()
-        return offers
+        return jsonable_encoder(offers)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -406,7 +407,14 @@ async def toggle_offer(
             {"id": offer_id},
             {"$set": {"active": new_status, "updated_at": datetime.utcnow().isoformat()}}
         )
-        return {"message": f"Offer {'activated' if new_status else 'deactivated'} successfully", "active": new_status}
+        
+        # Get updated offer and return with proper serialization
+        updated_offer = await db.offers.find_one({"id": offer_id})
+        return jsonable_encoder({
+            "message": f"Offer {'activated' if new_status else 'deactivated'} successfully", 
+            "active": new_status,
+            "offer": updated_offer
+        })
     except HTTPException:
         raise
     except Exception as e:
