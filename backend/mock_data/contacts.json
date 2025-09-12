@@ -12,30 +12,6 @@
     "created_at": "2025-09-11T12:31:11.497283"
   },
   {
-    "id": "d75a659b-7743-4716-b0f0-72d71eb40f41",
-    "name": "safdsdaf",
-    "email": "sdfdsf@gmail.com",
-    "phone": "dsafdsf",
-    "project_type": "Web Application",
-    "budget": "₹10,000 - ₹25,000",
-    "message": "sdfasdaf",
-    "timeline": "ASAP (Rush Job)",
-    "read": true,
-    "created_at": "2025-09-11T15:09:20.052068"
-  },
-  {
-    "id": "3a03dacf-4b97-4a5d-bb2f-bbe609be1d89",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "phone": "+91 98765 43210",
-    "project_type": "Website Development",
-    "budget": "₹25,000 - ₹50,000",
-    "message": "I need a modern website for my business. Please contact me to discuss the requirements.",
-    "timeline": "1-2 Months",
-    "read": false,
-    "created_at": "2025-09-12T08:56:30.074370"
-  },
-  {
     "id": "dd640cad-31e6-4957-9445-e457a92926a2",
     "name": "Sarah Wilson",
     "email": "sarah@company.com",
