@@ -218,7 +218,7 @@ const AdminProfile = () => {
       setSaving(true);
       const token = localStorage.getItem('admin_token');
       
-      await axios.put('/api/admin/change-password', {
+      await axios.put(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/admin/change-password`, {
         current_password: passwordData.currentPassword,
         new_password: passwordData.newPassword
       }, {
