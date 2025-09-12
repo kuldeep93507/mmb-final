@@ -42,6 +42,12 @@ const AdminSidebar = () => {
       title: 'Content Management',
       items: [
         {
+          title: 'Hero Section',
+          path: '/admin/hero-section',
+          icon: Home,
+          badge: null
+        },
+        {
           title: 'Projects',
           path: '/admin/projects',
           icon: FolderOpen,

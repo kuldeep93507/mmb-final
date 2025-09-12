@@ -16,6 +16,7 @@ const Home = () => {
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [heroData, setHeroData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
 
@@ -25,15 +26,17 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const [servicesRes, projectsRes, testimonialsRes] = await Promise.all([
+      const [servicesRes, projectsRes, testimonialsRes, heroRes] = await Promise.all([
         axios.get(`${API}/services`),
         axios.get(`${API}/projects`),
-        axios.get(`${API}/testimonials`)
+        axios.get(`${API}/testimonials`),
+        axios.get(`${API}/hero-section`)
       ]);
       
       setServices(servicesRes.data);
       setProjects(projectsRes.data);
       setTestimonials(testimonialsRes.data);
+      setHeroData(heroRes.data);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     } finally {
@@ -60,7 +63,7 @@ const Home = () => {
               <div className="space-y-6">
                 <div className="space-y-4">
                   <h1 className="text-lg text-gray-600 font-medium">
-                    👋 Hello, I'm {siteSettings?.site_title || 'Kuldeep Parjapati'}
+                    {heroData?.greeting_text || '👋 Hello, I\'m MMB Port'}
                   </h1>
                   
                   <h2 
@@ -69,13 +72,13 @@ const Home = () => {
                       color: getThemeColors().primary
                     }}
                   >
-                    I Create<br />
-                    <span style={{ color: getThemeColors().secondary }}>Digital Solutions</span><br />
-                    That Convert
+                    {heroData?.main_heading_line1 || 'I Create'}<br />
+                    <span style={{ color: getThemeColors().secondary }}>{heroData?.main_heading_line2 || 'Digital Solutions'}</span><br />
+                    {heroData?.main_heading_line3 || 'That Convert'}
                   </h2>
                   
                   <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-                    {siteSettings?.site_description || 'I design modern websites that convert visitors into customers'}
+                    {heroData?.subtitle || 'Professional Portfolio Website'}
                   </p>
                 </div>
                 
@@ -83,9 +86,9 @@ const Home = () => {
                   <Button 
                     size="lg" 
                     className="bg-black hover:bg-gray-800 text-white px-8 py-3"
-                    onClick={() => navigate('/contact')}
+                    onClick={() => navigate(heroData?.cta_button_url || '/contact')}
                   >
-                    Get Started
+                    {heroData?.cta_button_text || 'Get Started'}
                   </Button>
                 </div>
               </div>
@@ -93,16 +96,16 @@ const Home = () => {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-8 pt-8">
                 <div>
-                  <div className="text-3xl font-bold text-black">50+</div>
-                  <div className="text-sm text-gray-500 mt-1">Projects</div>
+                  <div className="text-3xl font-bold text-black">{heroData?.stats?.projects_count || '50+'}</div>
+                  <div className="text-sm text-gray-500 mt-1">{heroData?.stats?.projects_label || 'Projects'}</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-black">95%</div>
-                  <div className="text-sm text-gray-500 mt-1">Satisfaction</div>
+                  <div className="text-3xl font-bold text-black">{heroData?.stats?.satisfaction_rate || '95%'}</div>
+                  <div className="text-sm text-gray-500 mt-1">{heroData?.stats?.satisfaction_label || 'Satisfaction'}</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-black">3+</div>
-                  <div className="text-sm text-gray-500 mt-1">Years</div>
+                  <div className="text-3xl font-bold text-black">{heroData?.stats?.experience_years || '3+'}</div>
+                  <div className="text-sm text-gray-500 mt-1">{heroData?.stats?.experience_label || 'Years'}</div>
                 </div>
               </div>
             </div>
@@ -114,7 +117,7 @@ const Home = () => {
                 <div className="relative w-32 h-32 mx-auto">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-pulse shadow-2xl"></div>
                   <div className="absolute inset-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-4xl font-bold transform hover:scale-110 transition-transform duration-300 shadow-inner">
-                    MMB
+                    {heroData?.profile_logo_text || 'MMB'}
                   </div>
                   {/* Floating elements */}
                   <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce delay-100"></div>
@@ -123,8 +126,8 @@ const Home = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-bold text-black">Kuldeep Parjapati</h3>
-                  <p className="text-gray-600 font-medium">Modern Web Solutions Expert</p>
+                  <h3 className="text-2xl font-bold text-black">{heroData?.profile_name || 'Kuldeep Parjapati'}</h3>
+                  <p className="text-gray-600 font-medium">{heroData?.profile_title || 'Modern Web Solutions Expert'}</p>
                 </div>
               </div>
             </div>

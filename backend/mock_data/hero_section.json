@@ -1,0 +1,25 @@
+[
+  {
+    "id": "main",
+    "greeting_text": "👋 मैं Kuldeep हूं",
+    "main_heading_line1": "Main बनाता हूं",
+    "main_heading_line2": "डिजिटल सॉल्यूशन",
+    "main_heading_line3": "जो काम आते हैं",
+    "subtitle": "Professional Portfolio Website",
+    "cta_button_text": "Get Started",
+    "cta_button_url": "/contact",
+    "profile_name": "Kuldeep Parjapati",
+    "profile_title": "Modern Web Solutions Expert",
+    "profile_logo_text": "MMB",
+    "stats": {
+      "projects_count": "50+",
+      "projects_label": "Projects",
+      "satisfaction_rate": "95%",
+      "satisfaction_label": "Satisfaction",
+      "experience_years": "3+",
+      "experience_label": "Years"
+    },
+    "created_at": null,
+    "updated_at": "2025-09-12T15:22:55.964847"
+  }
+]

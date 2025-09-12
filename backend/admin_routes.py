@@ -320,6 +320,46 @@ async def update_site_settings(
             detail=f"Failed to update site settings: {str(e)}"
         )
 
+# Hero Section Management Endpoints
+@admin_router.get("/hero-section")
+async def get_hero_section(current_admin: dict = Depends(get_current_admin)):
+    """Get hero section settings"""
+    try:
+        hero_data = await db.hero_section.find_one({"id": "main"})
+        if not hero_data:
+            # Create default hero section
+            from models import HeroSection
+            default_hero = HeroSection()
+            await db.hero_section.insert_one(default_hero.dict())
+            return default_hero.dict()
+        return hero_data
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch hero section: {str(e)}"
+        )
+
+@admin_router.put("/hero-section")
+async def update_hero_section(
+    hero_data: dict,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Update hero section settings"""
+    try:
+        from datetime import datetime
+        hero_data["updated_at"] = datetime.utcnow().isoformat()
+        result = await db.hero_section.update_one(
+            {"id": "main"},
+            {"$set": hero_data},
+            upsert=True
+        )
+        return {"message": "Hero section updated successfully"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update hero section: {str(e)}"
+        )
+
 # Offers Management Endpoints
 @admin_router.get("/offers")
 async def get_offers(current_admin: dict = Depends(get_current_admin)):

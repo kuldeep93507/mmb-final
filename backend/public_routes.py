@@ -165,6 +165,23 @@ async def get_public_media_settings():
             detail=f"Failed to fetch media settings: {str(e)}"
         )
 
+@public_router.get("/hero-section")
+async def get_public_hero_section():
+    """Get public hero section data"""
+    try:
+        hero_data = await db.hero_section.find_one({"id": "main"})
+        if not hero_data:
+            # Return default hero section
+            from models import HeroSection
+            default_hero = HeroSection()
+            return default_hero.dict()
+        return hero_data
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch hero section: {str(e)}"
+        )
+
 @public_router.get("/site-settings")
 async def get_public_site_settings():
     """Get public site settings"""

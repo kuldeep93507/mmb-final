@@ -35,6 +35,7 @@ import AdminTestimonials from "./pages/Admin/AdminTestimonials";
 import AdminMedia from "./pages/Admin/AdminMedia";
 import AdminOffers from "./pages/Admin/AdminOffers";
 import AdminAppearance from "./pages/Admin/AdminAppearance";
+import AdminHeroSection from "./pages/Admin/AdminHeroSection";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -188,6 +189,7 @@ function App() {
             }>
               <Route index element={<Navigate to="/admin/dashboard" />} />
               <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="hero-section" element={<AdminHeroSection />} />
               <Route path="services" element={<AdminServices />} />
               <Route path="projects" element={<AdminProjects />} />
               <Route path="contacts" element={<AdminContacts />} />

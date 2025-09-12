@@ -319,6 +319,44 @@ class SiteSettingsUpdate(BaseModel):
     primary_color: Optional[str] = None
     secondary_color: Optional[str] = None
     accent_color: Optional[str] = None
+
+# Hero Section Models
+class HeroStats(BaseModel):
+    projects_count: str = "50+"
+    projects_label: str = "Projects"
+    satisfaction_rate: str = "95%"
+    satisfaction_label: str = "Satisfaction"
+    experience_years: str = "3+"
+    experience_label: str = "Years"
+
+class HeroSection(BaseModel):
+    id: str = "main"
+    greeting_text: str = "👋 Hello, I'm MMB Port"
+    main_heading_line1: str = "I Create"
+    main_heading_line2: str = "Digital Solutions"
+    main_heading_line3: str = "That Convert"
+    subtitle: str = "Professional Portfolio Website"
+    cta_button_text: str = "Get Started"
+    cta_button_url: str = "/contact"
+    profile_name: str = "Kuldeep Parjapati"
+    profile_title: str = "Modern Web Solutions Expert"
+    profile_logo_text: str = "MMB"
+    stats: HeroStats = HeroStats()
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+class HeroSectionUpdate(BaseModel):
+    greeting_text: Optional[str] = None
+    main_heading_line1: Optional[str] = None
+    main_heading_line2: Optional[str] = None
+    main_heading_line3: Optional[str] = None
+    subtitle: Optional[str] = None
+    cta_button_text: Optional[str] = None
+    cta_button_url: Optional[str] = None
+    profile_name: Optional[str] = None
+    profile_title: Optional[str] = None
+    profile_logo_text: Optional[str] = None
+    stats: Optional[HeroStats] = None
     nav_links: Optional[List[NavLink]] = None
     social_links: Optional[List[SocialLink]] = None
     footer_text: Optional[str] = None

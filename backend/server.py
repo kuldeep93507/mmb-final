@@ -41,6 +41,7 @@ class MockDB:
         self.media_settings = self.get_collection('media_settings')
         self.site_settings = self.get_collection('site_settings')
         self.offers = self.get_collection('offers')
+        self.hero_section = self.get_collection('hero_section')
         
     def get_collection(self, name):
         return MockCollection(self.data_dir / f'{name}.json')
