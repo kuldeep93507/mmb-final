@@ -51,8 +51,7 @@ DB_NAME=mmb_portfolio
 
 ## Admin Access
 - **URL**: https://[replit-domain]/admin/login
-- **Email**: kuldeep@mmb.dev
-- **Password**: MMB@2024!Secure
+- **Note**: Admin credentials are configured during setup for security
 
 ## Key Features
 - Modern portfolio website with admin panel
