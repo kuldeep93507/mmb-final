@@ -2,7 +2,7 @@
   {
     "id": "main",
     "offers_enabled": true,
-    "site_title": "MMB Portfoli",
+    "site_title": "MMB Portfolio",
     "site_description": "Professional Portfolio Website",
     "header_tagline": null,
     "primary_color": "#3b82f6",
@@ -15,4 +15,6 @@
     "contact_phone": null,
     "whatsapp_number": null,
     "google_analytics_id": null,
-    "updated_at": 
+    "updated_at": null
+  }
+]

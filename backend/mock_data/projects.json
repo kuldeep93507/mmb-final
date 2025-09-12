@@ -1,26 +1,5 @@
 [
   {
-    "id": "770a046e-9f09-475b-b0e2-20635ec693be",
-    "title": "Durga Chemical Solutions",
-    "description": "Corporate website for chemical solutions company with product catalog and inquiry system",
-    "image": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=400&fit=crop",
-    "category": "Corporate Website",
-    "tags": [
-      "WordPress",
-      "Corporate",
-      "Catalog"
-    ],
-    "technologies": [
-      "WordPress",
-      "PHP",
-      "MySQL"
-    ],
-    "live_url": "https://durgachemsol.com",
-    "github_url": null,
-    "featured": true,
-    "created_at": "2025-09-11T12:29:49.447003"
-  },
-  {
     "id": "3b48b11b-fb19-46da-b69d-051814c735c8",
     "title": "Hisar Job Place",
     "description": "Job portal connecting employers with job seekers in Hisar region",

@@ -302,7 +302,7 @@ async def update_site_settings(
             {"$set": settings},
             upsert=True
         )
-        return {"message": "Site settings updated successfully"}
+        return jsonable_encoder({"message": "Site settings updated successfully"})
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
