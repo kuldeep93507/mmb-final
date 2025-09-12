@@ -40,7 +40,7 @@ const AdminLayout = () => {
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem('admin_token');
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}/api/admin/notifications`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000'}/api/admin/notifications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setNotifications(response.data || []);
