@@ -30,22 +30,30 @@ const OfferBanner = () => {
 
   const fetchOfferData = async () => {
     try {
+      console.log('🔄 Fetching offer data...');
       const [offersResponse, settingsResponse] = await Promise.all([
         axios.get(`${API}/offers/active`),
         axios.get(`${API}/site-settings`)
       ]);
+      
+      console.log('📝 Site Settings:', settingsResponse.data);
+      console.log('🎁 Active Offers:', offersResponse.data);
       
       setSiteSettings(settingsResponse.data);
       
       // Get the highest priority active offer
       const activeOffers = offersResponse.data;
       if (activeOffers && activeOffers.length > 0) {
+        console.log('✅ Setting offer:', activeOffers[0]);
         setOffer(activeOffers[0]); // Already sorted by priority
+      } else {
+        console.log('❌ No active offers found');
       }
     } catch (error) {
-      console.error('Failed to fetch offer data:', error);
+      console.error('❌ Failed to fetch offer data:', error);
     } finally {
       setLoading(false);
+      console.log('✅ Loading completed');
     }
   };
 
@@ -91,14 +99,11 @@ const OfferBanner = () => {
     }
   };
 
-  // Don't show banner if:
-  // - Loading
-  // - No offer data
-  // - Offers disabled globally
-  // - User dismissed it
+  // Show banner if all conditions are met
   if (loading || !offer || !siteSettings?.offers_enabled || isDismissed) {
     return null;
   }
+
 
   const timeRemaining = formatTimeRemaining(offer.ends_at);
 
