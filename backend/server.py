@@ -277,10 +277,14 @@ app.include_router(admin_router)
 app.include_router(public_router)
 app.include_router(profile_router)
 
-# Admin panel route
+# Get CORS origins from environment
+cors_origins = os.getenv('CORS_ORIGINS', '*').split(',') if os.getenv('CORS_ORIGINS') != '*' else ["*"]
+
+# Admin panel route  
 @app.get("/admin")
 async def admin_panel():
-    return {"message": "Admin Panel - Please use frontend at http://localhost:3000/admin/login"}
+    frontend_url = os.getenv('FRONTEND_URL', 'https://c8c5ce43-b358-4b41-9b87-8a58609f42a6-00-kmxcabryim7l.kirk.replit.dev')
+    return {"message": f"Admin Panel - Please use frontend at {frontend_url}/admin/login"}
 
 # Legacy route for compatibility
 @app.get("/api/")
@@ -290,12 +294,13 @@ async def root():
 # Root route
 @app.get("/")
 async def home():
-    return {"message": "MMB Portfolio API - Backend Server Running", "admin_panel": "http://localhost:3000/admin/login", "api_docs": "http://localhost:8000/docs"}
+    frontend_url = os.getenv('FRONTEND_URL', 'https://c8c5ce43-b358-4b41-9b87-8a58609f42a6-00-kmxcabryim7l.kirk.replit.dev')
+    return {"message": "MMB Portfolio API - Backend Server Running", "admin_panel": f"{frontend_url}/admin/login", "api_docs": "/docs"}
 
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],
+    allow_origins=cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -311,4 +316,4 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -43,4 +43,13 @@ module.exports = {
       return webpackConfig;
     },
   },
+  // Replit configuration - allow all hosts and set port 5000
+  devServer: {
+    host: '0.0.0.0',
+    port: 5000,
+    allowedHosts: 'all',
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  },
 };

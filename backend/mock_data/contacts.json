@@ -22,5 +22,29 @@
     "timeline": "ASAP (Rush Job)",
     "read": true,
     "created_at": "2025-09-11T15:09:20.052068"
+  },
+  {
+    "id": "3a03dacf-4b97-4a5d-bb2f-bbe609be1d89",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+91 98765 43210",
+    "project_type": "Website Development",
+    "budget": "₹25,000 - ₹50,000",
+    "message": "I need a modern website for my business. Please contact me to discuss the requirements.",
+    "timeline": "1-2 Months",
+    "read": false,
+    "created_at": "2025-09-12T08:56:30.074370"
+  },
+  {
+    "id": "dd640cad-31e6-4957-9445-e457a92926a2",
+    "name": "Sarah Wilson",
+    "email": "sarah@company.com",
+    "phone": "+91 87654 32109",
+    "project_type": "E-commerce Store",
+    "budget": "₹50,000 - ₹1,00,000",
+    "message": "Looking for an e-commerce solution with payment gateway integration.",
+    "timeline": "3-4 Weeks",
+    "read": true,
+    "created_at": "2025-09-12T08:56:30.074517"
   }
 ]

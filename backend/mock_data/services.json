@@ -94,5 +94,101 @@
     "icon": "PenTool",
     "active": true,
     "created_at": "2025-09-11T12:30:45.619746"
+  },
+  {
+    "id": "dfd91f20-3bf5-42fa-beac-796e7e470602",
+    "title": "Website Development",
+    "description": "Custom responsive websites built with modern technologies like React, Next.js, and Node.js",
+    "price": "Starting from ₹15,000",
+    "duration": "7-14 days",
+    "features": [
+      "Responsive Design",
+      "Fast Loading",
+      "SEO Optimized",
+      "Admin Panel"
+    ],
+    "icon": "Globe",
+    "active": true,
+    "created_at": "2025-09-12T08:56:29.958199"
+  },
+  {
+    "id": "0f5f72eb-a933-49ca-8f8e-2284b65633fa",
+    "title": "Landing Page Design",
+    "description": "High-conversion landing pages that turn visitors into customers with compelling design and copy",
+    "price": "Starting from ₹8,000",
+    "duration": "3-5 days",
+    "features": [
+      "Conversion Focused",
+      "Mobile First",
+      "A/B Testing",
+      "Analytics Setup"
+    ],
+    "icon": "Layout",
+    "active": true,
+    "created_at": "2025-09-12T08:56:29.958383"
+  },
+  {
+    "id": "5da0a07c-56d3-4838-9a0b-273760798b0b",
+    "title": "UX/UI Design",
+    "description": "User-centered design approach with wireframes, prototypes, and beautiful interfaces",
+    "price": "Starting from ₹12,000",
+    "duration": "5-10 days",
+    "features": [
+      "User Research",
+      "Wireframes",
+      "Prototypes",
+      "Design System"
+    ],
+    "icon": "Palette",
+    "active": true,
+    "created_at": "2025-09-12T08:56:29.958506"
+  },
+  {
+    "id": "942dfcaf-d864-4a2a-bb27-f8f60993d0b4",
+    "title": "WordPress Development",
+    "description": "Custom WordPress themes and plugins with easy-to-use admin panels",
+    "price": "Starting from ₹10,000",
+    "duration": "5-7 days",
+    "features": [
+      "Custom Themes",
+      "Plugin Development",
+      "WooCommerce",
+      "SEO Ready"
+    ],
+    "icon": "Code",
+    "active": true,
+    "created_at": "2025-09-12T08:56:29.958557"
+  },
+  {
+    "id": "59053b17-4aad-4bc3-a283-77dd65d45eb8",
+    "title": "Content Writing",
+    "description": "SEO-optimized content that engages your audience and improves search rankings",
+    "price": "Starting from ₹500/page",
+    "duration": "1-3 days",
+    "features": [
+      "SEO Optimized",
+      "Engaging Copy",
+      "Research Based",
+      "Plagiarism Free"
+    ],
+    "icon": "PenTool",
+    "active": true,
+    "created_at": "2025-09-12T08:56:29.958604"
+  },
+  {
+    "id": "4ae68663-5c6d-4f46-96b7-35621377ac65",
+    "title": "Digital Marketing",
+    "description": "Complete digital marketing solutions including social media and SEO strategies",
+    "price": "Starting from ₹5,000/month",
+    "duration": "Ongoing",
+    "features": [
+      "Social Media",
+      "SEO Strategy",
+      "Content Calendar",
+      "Analytics"
+    ],
+    "icon": "TrendingUp",
+    "active": true,
+    "created_at": "2025-09-12T08:56:29.958648"
   }
 ]
