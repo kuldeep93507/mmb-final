@@ -43,7 +43,7 @@ class ProfileResponse(BaseModel):
     instagram: Optional[str] = None
     website: Optional[str] = None
 
-@profile_router.get("/profile", response_model=ProfileResponse)
+@profile_router.get("/profile")
 async def get_profile(current_admin: dict = Depends(get_current_admin)):
     # Get profile from profiles collection or create default
     profile = await db.profiles.find_one({"admin_id": current_admin["id"]})
@@ -67,22 +67,26 @@ async def get_profile(current_admin: dict = Depends(get_current_admin)):
         result = await db.profiles.insert_one(default_profile)
         profile = await db.profiles.find_one({"_id": result.inserted_id})
     
-    return ProfileResponse(
-        id=str(profile["_id"]),
-        name=profile["name"],
-        email=profile["email"],
-        phone=profile.get("phone"),
-        whatsapp=profile.get("whatsapp"),
-        address=profile.get("address"),
-        bio=profile.get("bio"),
-        linkedin=profile.get("linkedin"),
-        github=profile.get("github"),
-        twitter=profile.get("twitter"),
-        instagram=profile.get("instagram"),
-        website=profile.get("website")
-    )
+    # Return in format expected by frontend
+    return {
+        "admin": {
+            "id": str(profile["_id"]),
+            "name": profile["name"],
+            "email": profile["email"],
+            "phone": profile.get("phone"),
+            "whatsapp": profile.get("whatsapp"),
+            "address": profile.get("address"),
+            "bio": profile.get("bio"),
+            "linkedin": profile.get("linkedin"),
+            "github": profile.get("github"),
+            "twitter": profile.get("twitter"),
+            "instagram": profile.get("instagram"),
+            "website": profile.get("website"),
+            "avatar": profile.get("avatar", "")
+        }
+    }
 
-@profile_router.put("/profile", response_model=ProfileResponse)
+@profile_router.put("/profile")
 async def update_profile(profile_data: ProfileData, current_admin: dict = Depends(get_current_admin)):
     update_data = profile_data.dict()
     
@@ -96,17 +100,21 @@ async def update_profile(profile_data: ProfileData, current_admin: dict = Depend
     # Get updated profile
     profile = await db.profiles.find_one({"admin_id": current_admin["id"]})
     
-    return ProfileResponse(
-        id=str(profile["_id"]),
-        name=profile["name"],
-        email=profile["email"],
-        phone=profile.get("phone"),
-        whatsapp=profile.get("whatsapp"),
-        address=profile.get("address"),
-        bio=profile.get("bio"),
-        linkedin=profile.get("linkedin"),
-        github=profile.get("github"),
-        twitter=profile.get("twitter"),
-        instagram=profile.get("instagram"),
-        website=profile.get("website")
-    )
+    # Return in format expected by frontend
+    return {
+        "admin": {
+            "id": str(profile["_id"]),
+            "name": profile["name"],
+            "email": profile["email"],
+            "phone": profile.get("phone"),
+            "whatsapp": profile.get("whatsapp"),
+            "address": profile.get("address"),
+            "bio": profile.get("bio"),
+            "linkedin": profile.get("linkedin"),
+            "github": profile.get("github"),
+            "twitter": profile.get("twitter"),
+            "instagram": profile.get("instagram"),
+            "website": profile.get("website"),
+            "avatar": profile.get("avatar", "")
+        }
+    }

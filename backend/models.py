@@ -36,6 +36,11 @@ class AdminResponse(BaseModel):
     address: Optional[str] = None
     bio: Optional[str] = None
     avatar: Optional[str] = None
+    linkedin: Optional[str] = None
+    github: Optional[str] = None
+    twitter: Optional[str] = None
+    instagram: Optional[str] = None
+    website: Optional[str] = None
 
 class AdminProfileUpdate(BaseModel):
     name: Optional[str] = None
@@ -44,6 +49,11 @@ class AdminProfileUpdate(BaseModel):
     address: Optional[str] = None
     bio: Optional[str] = None
     avatar: Optional[str] = None
+    linkedin: Optional[str] = None
+    github: Optional[str] = None
+    twitter: Optional[str] = None
+    instagram: Optional[str] = None
+    website: Optional[str] = None
 
 # Service Models
 class Service(BaseModel):

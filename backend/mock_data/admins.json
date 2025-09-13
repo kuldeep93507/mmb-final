@@ -1,6 +1,6 @@
 [
   {
-    "id": "ce094508-287b-4a56-8445-1d0b279aa3ee",
+    "id": "3f716003-ae4a-4371-acae-ab45d81c615b",
     "email": "fiewin375@gmail.com",
     "password": "$2b$12$9mJD4GSMxBTas6qQD0hck.w/OPYw/fceIN1P614IEHRhOHxiVtBZa",
     "name": "Kuldeep Parjapati",
@@ -8,17 +8,8 @@
     "token_version": 2,
     "created_at": "2025-09-12T10:46:37.262118",
     "phone": "+91 9817034573",
-    "address": "Hisar",
+    "address": "siwani",
     "bio": "web solution",
     "avatar": ""
-  },
-  {
-    "id": "3bcfeb55-c22b-40f6-a74d-f5d01516caf1",
-    "email": "admin@example.com",
-    "password": "$2b$12$nC/jPRsZQyVGn6W8znnFCebDH/QCN3qo2N8jVeA00bl/nLZbeMhFu",
-    "name": "System Administrator",
-    "role": "admin",
-    "token_version": 1,
-    "created_at": "2025-09-13T10:55:24.639894"
   }
 ]

@@ -47,8 +47,14 @@ const AdminProfile = () => {
     name: '',
     email: '',
     phone: '',
+    whatsapp: '',
     address: '',
     bio: '',
+    linkedin: '',
+    github: '',
+    twitter: '',
+    instagram: '',
+    website: '',
     avatar: ''
   });
   
@@ -88,8 +94,14 @@ const AdminProfile = () => {
         name: data.name || '',
         email: data.email || '',
         phone: data.phone || '',
+        whatsapp: data.whatsapp || '',
         address: data.address || '',
         bio: data.bio || '',
+        linkedin: data.linkedin || '',
+        github: data.github || '',
+        twitter: data.twitter || '',
+        instagram: data.instagram || '',
+        website: data.website || '',
         avatar: data.avatar || ''
       });
     } catch (error) {
@@ -371,6 +383,69 @@ const AdminProfile = () => {
                       value={profileData.address}
                       onChange={(e) => handleProfileChange('address', e.target.value)}
                       placeholder="Enter your address"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                    <Input
+                      id="whatsapp"
+                      value={profileData.whatsapp}
+                      onChange={(e) => handleProfileChange('whatsapp', e.target.value)}
+                      placeholder="Enter your WhatsApp number"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="website">Website</Label>
+                    <Input
+                      id="website"
+                      value={profileData.website}
+                      onChange={(e) => handleProfileChange('website', e.target.value)}
+                      placeholder="https://yourwebsite.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="linkedin">LinkedIn Profile</Label>
+                    <Input
+                      id="linkedin"
+                      value={profileData.linkedin}
+                      onChange={(e) => handleProfileChange('linkedin', e.target.value)}
+                      placeholder="https://linkedin.com/in/username"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="github">GitHub Profile</Label>
+                    <Input
+                      id="github"
+                      value={profileData.github}
+                      onChange={(e) => handleProfileChange('github', e.target.value)}
+                      placeholder="https://github.com/username"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="twitter">Twitter Profile</Label>
+                    <Input
+                      id="twitter"
+                      value={profileData.twitter}
+                      onChange={(e) => handleProfileChange('twitter', e.target.value)}
+                      placeholder="https://twitter.com/username"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="instagram">Instagram Profile</Label>
+                    <Input
+                      id="instagram"
+                      value={profileData.instagram}
+                      onChange={(e) => handleProfileChange('instagram', e.target.value)}
+                      placeholder="https://instagram.com/username"
                     />
                   </div>
                 </div>

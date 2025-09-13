@@ -58,31 +58,49 @@ async def submit_contact(contact_data: ContactCreate):
 # Public Profile/Contact Info API
 @public_router.get("/profile")
 async def get_public_profile():
-    # Get the most recent admin's profile (latest created/updated)
-    admins = await db.admins.find({}).to_list()
-    if not admins:
-        admin = None
-    else:
-        # Sort by created_at descending to get the latest
-        admins.sort(key=lambda x: x.get('created_at', ''), reverse=True)
-        admin = admins[0]
-    if not admin:
-        return {
-            "name": "Kuldeep Parjapati",
-            "email": "hello@mmb.dev",
-            "phone": "+91 98765 43210",
-            "whatsapp": "+91 98765 43210",
-            "address": "India",
-            "bio": "Professional Web Developer & Designer creating modern, responsive websites and digital solutions that convert visitors into customers.",
-            "linkedin": "https://linkedin.com/in/mmb",
-            "github": "https://github.com/mmb",
-            "twitter": "https://twitter.com/mmb",
-            "instagram": "https://instagram.com/mmb",
-            "website": "https://mmb.dev"
-        }
-    
-    profile = await db.profiles.find_one({"admin_id": admin["id"]})
-    if not profile:
+    try:
+        # Get the most recent admin's profile (latest created/updated)
+        admins = await db.admins.find({}).to_list()
+        if not admins:
+            admin = None
+        else:
+            # Sort by created_at descending to get the latest
+            admins.sort(key=lambda x: x.get('created_at', ''), reverse=True)
+            admin = admins[0]
+        
+        if not admin:
+            return {
+                "name": "Kuldeep Parjapati",
+                "email": "hello@mmb.dev",
+                "phone": "+91 98765 43210",
+                "whatsapp": "+91 98765 43210",
+                "address": "India",
+                "bio": "Professional Web Developer & Designer creating modern, responsive websites and digital solutions that convert visitors into customers.",
+                "linkedin": "https://linkedin.com/in/mmb",
+                "github": "https://github.com/mmb",
+                "twitter": "https://twitter.com/mmb",
+                "instagram": "https://instagram.com/mmb",
+                "website": "https://mmb.dev"
+            }
+        
+        # Try to find profile by admin_id
+        profile = await db.profiles.find_one({"admin_id": admin["id"]})
+        
+        if not profile:
+            return {
+                "name": "Kuldeep Parjapati",
+                "email": "hello@mmb.dev",
+                "phone": "+91 98765 43210",
+                "whatsapp": "+91 98765 43210",
+                "address": "India",
+                "bio": "Professional Web Developer & Designer creating modern, responsive websites and digital solutions that convert visitors into customers.",
+                "linkedin": "https://linkedin.com/in/mmb",
+                "github": "https://github.com/mmb",
+                "twitter": "https://twitter.com/mmb",
+                "instagram": "https://instagram.com/mmb",
+                "website": "https://mmb.dev"
+            }
+    except Exception as e:
         return {
             "name": "Kuldeep Parjapati",
             "email": "hello@mmb.dev",

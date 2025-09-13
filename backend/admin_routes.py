@@ -171,6 +171,18 @@ async def update_admin_profile(profile_data: AdminProfileUpdate, current_admin: 
         profile_update_data["address"] = update_data["address"]
     if "bio" in update_data:
         profile_update_data["bio"] = update_data["bio"]
+    if "linkedin" in update_data:
+        profile_update_data["linkedin"] = update_data["linkedin"]
+    if "github" in update_data:
+        profile_update_data["github"] = update_data["github"]
+    if "twitter" in update_data:
+        profile_update_data["twitter"] = update_data["twitter"]
+    if "instagram" in update_data:
+        profile_update_data["instagram"] = update_data["instagram"]
+    if "website" in update_data:
+        profile_update_data["website"] = update_data["website"]
+    if "avatar" in update_data:
+        profile_update_data["avatar"] = update_data["avatar"]
     
     if profile_update_data:
         await db.profiles.update_one(
