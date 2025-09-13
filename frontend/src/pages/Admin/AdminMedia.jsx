@@ -4,7 +4,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { useToast } from '../../hooks/use-toast';
-import { Upload, Image, Palette, Save, Trash2, Eye, FileImage, AlertCircle, CheckCircle, X } from 'lucide-react';
+import { Upload, Image, Palette, Save, Trash2, Eye, FileImage, AlertCircle, CheckCircle, X, Link } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
@@ -30,6 +30,13 @@ const AdminMedia = () => {
     totalFiles: 0,
     totalSize: 0,
     lastUpdated: null
+  });
+
+  const [urlInputs, setUrlInputs] = useState({
+    logo: '',
+    hero_image: '',
+    about_image: '',
+    favicon: ''
   });
 
   useEffect(() => {
@@ -212,9 +219,21 @@ const AdminMedia = () => {
 
     } catch (error) {
       console.error('Upload error:', error);
+      
+      // Handle structured error response from backend
+      let errorMessage = "Upload failed";
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        if (typeof detail === 'object' && detail.message) {
+          errorMessage = detail.message;
+        } else if (typeof detail === 'string') {
+          errorMessage = detail;
+        }
+      }
+      
       toast({
         title: "Error",
-        description: error.response?.data?.detail || "Upload failed",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -259,6 +278,47 @@ const AdminMedia = () => {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const updateImageFromUrl = async (type, url) => {
+    if (!url.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid URL",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setUploading(true);
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+
+      const response = await axios.put(`${API}/api/admin/media-settings`, {
+        [type]: url
+      }, config);
+
+      if (response.data) {
+        setMediaData(prev => ({ ...prev, [type]: url }));
+        setUrlInputs(prev => ({ ...prev, [type]: '' }));
+        toast({
+          title: "Success",
+          description: `${type.replace('_', ' ')} updated successfully from URL`
+        });
+        fetchMediaData();
+      }
+    } catch (error) {
+      console.error('Error updating image from URL:', error);
+      toast({
+        title: "Error",
+        description: error.response?.data?.detail || "Failed to update image from URL",
+        variant: "destructive"
+      });
+    } finally {
+      setUploading(false);
+    }
   };
 
   const MediaCard = ({ type, title, description, currentUrl, recommended }) => (
@@ -348,6 +408,33 @@ const AdminMedia = () => {
               Max size: 5MB • Formats: JPG, PNG, WebP, SVG
             </p>
           </div>
+        </div>
+
+        {/* URL Input Section */}
+        <div>
+          <Label className="text-sm font-medium">Or Use Image URL</Label>
+          <div className="mt-2 flex space-x-2">
+            <div className="flex-1">
+              <Input
+                type="url"
+                placeholder="https://example.com/image.jpg"
+                value={urlInputs[type]}
+                onChange={(e) => setUrlInputs(prev => ({ ...prev, [type]: e.target.value }))}
+                className="w-full"
+              />
+            </div>
+            <Button
+              onClick={() => updateImageFromUrl(type, urlInputs[type])}
+              disabled={uploading || !urlInputs[type].trim()}
+              size="sm"
+            >
+              <Link className="h-4 w-4 mr-2" />
+              Use URL
+            </Button>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Enter a direct image URL to use as {title.toLowerCase()}
+          </p>
         </div>
 
         {/* Preview & Upload */}

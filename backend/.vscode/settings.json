@@ -1,0 +1,14 @@
+{
+    "python.defaultInterpreterPath": "/home/runner/workspace/.pythonlibs/bin/python",
+    "python.pythonPath": "/home/runner/workspace/.pythonlibs/bin/python",
+    "python.analysis.extraPaths": [
+        "/nix/store/zz7i75jb78idaz0rb1y1i4rzdyxq28vf-sitecustomize/lib/python/site-packages",
+        "/nix/store/yaps09f01jp3fd1405qlr0qz6haf6z03-python3.11-pip-25.0.1/lib/python3.11/site-packages",
+        "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages",
+        "/nix/store/y0iwy8ma2m45pr23bw4r7lyz69v2b6wf-python3.11-setuptools-80.7.1/lib/python3.11/site-packages"
+    ],
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.useImportHeuristic": true,
+    "python.analysis.autoImportCompletions": true
+}

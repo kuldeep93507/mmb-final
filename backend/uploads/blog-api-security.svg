@@ -1,0 +1,14 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="secGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7f1d1d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#secGrad)"/>
+  <path d="M300 140 L280 160 L280 220 Q280 240 300 240 Q320 240 320 220 L320 160 Z" fill="white"/>
+  <circle cx="300" cy="150" r="20" fill="none" stroke="white" stroke-width="6"/>
+  <circle cx="300" cy="200" r="6" fill="#dc2626"/>
+  <text x="300" y="320" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">API Security</text>
+  <text x="300" y="350" text-anchor="middle" fill="#dc2626" font-family="Arial, sans-serif" font-size="16">Best Practices Guide</text>
+</svg>

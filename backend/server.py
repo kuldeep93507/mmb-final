@@ -320,16 +320,30 @@ if frontend_build_dir.exists():
         # For all other routes (React SPA routes), serve index.html
         return FileResponse(str(frontend_build_dir / "index.html"))
 
-# Get CORS origins from environment - avoid wildcard for security
+# Get CORS origins from environment - avoid wildcard# Configure logging first
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Enhanced CORS configuration
 cors_origins_env = os.getenv('CORS_ORIGINS', '')
 if cors_origins_env:
     cors_origins = [origin.strip() for origin in cors_origins_env.split(',')]
 else:
-    # Default to specific domains for security
+    # Default origins for development and production
     cors_origins = [
+        'http://localhost:3000',  # React dev server
+        'http://localhost:5000',  # Backend server
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:5000',
         'https://c8c5ce43-b358-4b41-9b87-8a58609f42a6-00-kmxcabryim7l.kirk.replit.dev',
-        'http://localhost:5000'
+        # Add production domains here
     ]
+
+# Log CORS origins for debugging
+logger.info(f"CORS origins configured: {cors_origins}")
 
 # API info route
 @app.get("/api/")
@@ -341,20 +355,31 @@ async def api_info():
 async def health_check():
     return {"status": "healthy", "message": "MMB Portfolio API is running"}
 
+# Add CORS middleware with enhanced configuration
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_origins=cors_origins,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=[
+        "*",
+        "Authorization",
+        "Content-Type",
+        "X-Requested-With",
+        "Accept",
+        "Origin",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers",
+    ],
+    expose_headers=[
+        "Content-Length",
+        "Content-Type",
+        "X-Total-Count",
+    ],
+    max_age=86400,  # 24 hours
 )
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# Logging already configured above
 
 # Shutdown event removed - using mock database
 

@@ -1,0 +1,15 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="perfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#61dafb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#282c34;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#perfGrad)"/>
+  <circle cx="300" cy="200" r="60" fill="none" stroke="#61dafb" stroke-width="6"/>
+  <circle cx="300" cy="200" r="30" fill="none" stroke="#61dafb" stroke-width="4"/>
+  <circle cx="300" cy="200" r="6" fill="#61dafb"/>
+  <path d="M250 150 L350 150 L340 140 M350 150 L340 160" stroke="#00ff00" stroke-width="4" fill="none"/>
+  <text x="300" y="320" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">React Performance</text>
+  <text x="300" y="350" text-anchor="middle" fill="#61dafb" font-family="Arial, sans-serif" font-size="16">Optimization Techniques</text>
+</svg>

@@ -7,7 +7,7 @@ export const mockData = {
     tagline: "Modern Web Solutions That Convert Visitors Into Customers",
     description: "Professional Website Development, UX/UI Design & Digital Solutions",
     ctaText: "Let's Work Together",
-    heroImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+    heroImage: "/uploads/hero-image.svg"
   },
 
   // About Section
@@ -92,7 +92,7 @@ export const mockData = {
       id: 1,
       title: "Skillpay - Payment Solutions",
       description: "Modern payment gateway website with secure transactions and user-friendly interface",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
+      image: "/uploads/blog-api-security.svg",
       category: "Website Development",
       tags: ["React", "Payment Gateway", "Security"],
       liveUrl: "https://skillpay.shop",
@@ -102,7 +102,7 @@ export const mockData = {
       id: 2,
       title: "Durga Chemical Solutions",
       description: "Corporate website for chemical solutions company with product catalog and inquiry system",
-      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=400&fit=crop",
+      image: "/uploads/project-corporate.svg",
       category: "Corporate Website",
       tags: ["WordPress", "Corporate", "Catalog"],
       liveUrl: "https://durgachemsol.com",
@@ -112,7 +112,7 @@ export const mockData = {
       id: 3,
       title: "Hisar Job Place",
       description: "Job portal connecting employers with job seekers in Hisar region",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+      image: "/uploads/blog-tailwind-css.svg",
       category: "Web Application",
       tags: ["Job Portal", "React", "Database"],
       liveUrl: "https://hisarjobplace.in",
@@ -122,7 +122,7 @@ export const mockData = {
       id: 4,
       title: "NeoGenie Shop",
       description: "E-commerce platform with modern design and seamless shopping experience",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+      image: "/uploads/project-ecommerce.svg",
       category: "E-commerce",
       tags: ["E-commerce", "Shopping", "Payment"],
       liveUrl: "https://neogenie.shop",
@@ -132,7 +132,7 @@ export const mockData = {
       id: 5,
       title: "Pensiya Krishi Farm",
       description: "Agricultural website showcasing farm products and organic farming practices",
-      image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop",
+      image: "/uploads/project-agriculture.svg",
       category: "Agriculture",
       tags: ["Agriculture", "Organic", "Products"],
       liveUrl: "https://pensiyakrishifarm.com",
@@ -142,7 +142,7 @@ export const mockData = {
       id: 6,
       title: "Krishi Ledger App",
       description: "Farm management application for tracking crops, expenses, and profits",
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
+      image: "/uploads/project-app.svg",
       category: "Web Application",
       tags: ["Agriculture", "Management", "Dashboard"],
       liveUrl: "https://app--krishi-ledger-copy-copy-0e9155b6.base44.app",
@@ -159,7 +159,7 @@ export const mockData = {
       company: "Durga Chemical Solutions",
       rating: 5,
       text: "MMB delivered an exceptional website that perfectly represents our brand. Professional service and excellent communication throughout the project.",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+      image: "/uploads/avatar-male-1.svg"
     },
     {
       id: 2,
@@ -168,7 +168,7 @@ export const mockData = {
       company: "NeoGenie Shop", 
       rating: 5,
       text: "The e-commerce platform MMB built for us increased our sales by 40%. Amazing work and great attention to detail!",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+      image: "/uploads/avatar-female-1.svg"
     },
     {
       id: 3,
@@ -177,7 +177,7 @@ export const mockData = {
       company: "Pensiya Krishi Farm",
       rating: 5,
       text: "Professional, timely delivery, and excellent support. MMB understood our agricultural business needs perfectly.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+      image: "/uploads/avatar-male-2.svg"
     }
   ],
 
@@ -187,7 +187,7 @@ export const mockData = {
       id: 1,
       title: "Complete Guide to React Hooks in 2024",
       excerpt: "Master React Hooks with practical examples and learn how to build modern, efficient React applications using useState, useEffect, and custom hooks.",
-      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop",
+      image: "/uploads/blog-react-hooks.svg",
       category: "React",
       author: "MMB",
       publishDate: "2024-01-25",
@@ -198,7 +198,7 @@ export const mockData = {
       id: 2,
       title: "Building Responsive Websites with Tailwind CSS",
       excerpt: "Learn advanced Tailwind CSS techniques for creating beautiful, responsive designs that work perfectly across all devices and screen sizes.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+      image: "/uploads/blog-tailwind-css.svg",
       category: "CSS",
       author: "MMB",
       publishDate: "2024-01-22",
@@ -209,7 +209,7 @@ export const mockData = {
       id: 3,
       title: "Node.js Best Practices for Production Applications",
       excerpt: "Essential Node.js best practices, security considerations, and performance optimizations for building scalable backend applications in production.",
-      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
+      image: "/uploads/blog-nodejs.svg",
       category: "Node.js",
       author: "MMB",
       publishDate: "2024-01-20",
@@ -220,7 +220,7 @@ export const mockData = {
       id: 4,
       title: "SEO Optimization for Modern Web Applications",
       excerpt: "Complete SEO guide for modern web apps including technical SEO, Core Web Vitals, and strategies to improve search engine rankings in 2024.",
-      image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop",
+      image: "/uploads/blog-seo.svg",
       category: "SEO",
       author: "MMB",
       publishDate: "2024-01-18",
@@ -231,7 +231,7 @@ export const mockData = {
       id: 5,
       title: "MongoDB Database Design Patterns and Best Practices",
       excerpt: "Learn MongoDB schema design patterns, indexing strategies, and performance optimization techniques for building efficient database solutions.",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+      image: "/uploads/blog-mongodb.svg",
       category: "Database",
       author: "MMB",
       publishDate: "2024-01-15",
@@ -242,7 +242,7 @@ export const mockData = {
       id: 6,
       title: "WordPress vs Custom Development: Complete Comparison",
       excerpt: "Detailed comparison between WordPress and custom development approaches, helping you choose the right solution for your business needs.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+      image: "/uploads/blog-wordpress.svg",
       category: "WordPress",
       author: "MMB",
       publishDate: "2024-01-12",
@@ -253,7 +253,7 @@ export const mockData = {
       id: 7,
       title: "API Security Best Practices for Web Developers",
       excerpt: "Essential security practices for REST APIs including authentication, authorization, rate limiting, and protection against common vulnerabilities.",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
+      image: "/uploads/blog-api-security.svg",
       category: "Security",
       author: "MMB",
       publishDate: "2024-01-10",
@@ -264,7 +264,7 @@ export const mockData = {
       id: 8,
       title: "Performance Optimization Techniques for React Applications",
       excerpt: "Advanced React performance optimization strategies including code splitting, lazy loading, memoization, and bundle size reduction techniques.",
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop",
+      image: "/uploads/blog-react-performance.svg",
       category: "React",
       author: "MMB",
       publishDate: "2024-01-08",

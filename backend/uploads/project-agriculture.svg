@@ -1,0 +1,17 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="agriGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#65a30d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#365314;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#agriGrad)"/>
+  <ellipse cx="300" cy="280" rx="80" ry="20" fill="#84cc16"/>
+  <rect x="290" y="200" width="20" height="80" fill="#65a30d"/>
+  <path d="M280 180 Q290 160 300 180 Q310 160 320 180 Q310 200 300 180 Q290 200 280 180" fill="#84cc16"/>
+  <circle cx="250" cy="200" r="8" fill="#fbbf24"/>
+  <circle cx="350" cy="190" r="6" fill="#fbbf24"/>
+  <circle cx="320" cy="220" r="5" fill="#fbbf24"/>
+  <text x="300" y="320" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">Agriculture Farm</text>
+  <text x="300" y="350" text-anchor="middle" fill="#84cc16" font-family="Arial, sans-serif" font-size="16">Organic & Fresh</text>
+</svg>

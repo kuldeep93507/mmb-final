@@ -5,13 +5,11 @@ import os
 import uuid
 from pathlib import Path
 from typing import List
+from datetime import datetime
 from models import *
 from auth import get_current_admin, verify_password, hash_password, create_access_token, DEFAULT_ADMIN
 # MongoDB import removed - using mock database
-import os
-from datetime import datetime
 from dotenv import load_dotenv
-from pathlib import Path
 
 # Load environment variables
 ROOT_DIR = Path(__file__).parent
@@ -21,6 +19,39 @@ load_dotenv(ROOT_DIR / '.env')
 db = None
 
 admin_router = APIRouter(prefix="/api/admin", tags=["admin"])
+
+# Upload progress tracking
+upload_progress = {}
+
+class UploadProgress:
+    def __init__(self, total_size):
+        self.total_size = total_size
+        self.uploaded_size = 0
+        self.status = "uploading"
+        self.error = None
+        self.start_time = datetime.now()
+    
+    def update(self, uploaded_size):
+        self.uploaded_size = uploaded_size
+    
+    def complete(self):
+        self.status = "completed"
+        self.uploaded_size = self.total_size
+    
+    def fail(self, error):
+        self.status = "failed"
+        self.error = str(error)
+    
+    def get_progress(self):
+        percentage = (self.uploaded_size / self.total_size * 100) if self.total_size > 0 else 0
+        return {
+            "status": self.status,
+            "percentage": round(percentage, 2),
+            "uploaded_size": self.uploaded_size,
+            "total_size": self.total_size,
+            "error": self.error,
+            "start_time": self.start_time.isoformat()
+        }
 
 # Initialize default admin if not exists
 async def init_default_admin():
@@ -196,62 +227,246 @@ async def update_media_settings(
             detail=f"Failed to update media settings: {str(e)}"
         )
 
+@admin_router.get("/upload-progress/{upload_id}")
+async def get_upload_progress(
+    upload_id: str,
+    current_admin: dict = Depends(get_current_admin)
+):
+    """Get upload progress for a specific upload ID"""
+    if upload_id not in upload_progress:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={
+                "error": "UPLOAD_NOT_FOUND",
+                "message": "Upload ID not found or expired"
+            }
+        )
+    
+    progress = upload_progress[upload_id].get_progress()
+    
+    # Clean up completed or failed uploads after 5 minutes
+    if progress["status"] in ["completed", "failed"]:
+        elapsed_time = datetime.now() - upload_progress[upload_id].start_time
+        if elapsed_time.total_seconds() > 300:  # 5 minutes
+            del upload_progress[upload_id]
+    
+    return progress
+
 @admin_router.post("/upload-media")
 async def upload_media(
     file: UploadFile = File(...),
     type: str = None,
     current_admin: dict = Depends(get_current_admin)
 ):
-    """Upload media file (logo, images, etc.)"""
+    """Upload media file (logo, images, etc.) with enhanced validation, error handling, and progress tracking"""
+    
+    # Generate upload ID for progress tracking
+    upload_id = uuid.uuid4().hex[:12]
+    
+    # Validate media type
     if not type or type not in ['logo', 'hero_image', 'about_image', 'favicon']:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid media type. Allowed: logo, hero_image, about_image, favicon"
+            detail={
+                "error": "INVALID_MEDIA_TYPE",
+                "message": "Invalid media type specified",
+                "allowed_types": ['logo', 'hero_image', 'about_image', 'favicon'],
+                "provided_type": type
+            }
         )
     
-    # Validate file type
-    allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml', 'image/x-icon']
-    if file.content_type not in allowed_types:
+    # Validate file exists and has content
+    if not file or not file.filename:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid file type. Only image files are allowed."
+            detail={
+                "error": "NO_FILE_PROVIDED",
+                "message": "No file was provided for upload"
+            }
         )
     
-    # Create uploads directory if it doesn't exist
-    upload_dir = Path("uploads")
-    upload_dir.mkdir(exist_ok=True)
+    # Check file size (10MB limit)
+    MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB in bytes
+    file_content = await file.read()
+    file_size = len(file_content)
     
-    # Generate unique filename
-    file_extension = Path(file.filename).suffix
-    unique_filename = f"{type}_{uuid.uuid4()}{file_extension}"
-    file_path = upload_dir / unique_filename
+    # Initialize progress tracking
+    upload_progress[upload_id] = UploadProgress(file_size)
     
     try:
-        # Save file
-        with open(file_path, "wb") as buffer:
-            content = await file.read()
-            buffer.write(content)
+        if file_size > MAX_FILE_SIZE:
+            upload_progress[upload_id].fail(f"File size ({file_size / (1024*1024):.2f}MB) exceeds maximum allowed size (10MB)")
+            raise HTTPException(
+                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                detail={
+                    "error": "FILE_TOO_LARGE",
+                    "message": f"File size ({file_size / (1024*1024):.2f}MB) exceeds maximum allowed size (10MB)",
+                    "max_size_mb": 10,
+                    "actual_size_mb": round(file_size / (1024*1024), 2),
+                    "upload_id": upload_id
+                }
+            )
         
-        # Create URL (in production, this would be your domain)
+        if file_size == 0:
+            upload_progress[upload_id].fail("The uploaded file is empty")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "error": "EMPTY_FILE",
+                    "message": "The uploaded file is empty",
+                    "upload_id": upload_id
+                }
+            )
+        
+        # Validate file type
+        allowed_types = {
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
+            'image/webp': ['.webp'],
+            'image/svg+xml': ['.svg'],
+            'image/x-icon': ['.ico'],
+            'image/vnd.microsoft.icon': ['.ico']
+        }
+        
+        if file.content_type not in allowed_types:
+            upload_progress[upload_id].fail(f"File type '{file.content_type}' is not supported")
+            raise HTTPException(
+                status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+                detail={
+                    "error": "UNSUPPORTED_FILE_TYPE",
+                    "message": f"File type '{file.content_type}' is not supported",
+                    "supported_types": list(allowed_types.keys()),
+                    "provided_type": file.content_type,
+                    "upload_id": upload_id
+                }
+            )
+        
+        # Validate file extension
+        file_extension = Path(file.filename).suffix.lower()
+        valid_extensions = [ext for exts in allowed_types.values() for ext in exts]
+        
+        if file_extension not in valid_extensions:
+            upload_progress[upload_id].fail(f"File extension '{file_extension}' is not allowed")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "error": "INVALID_FILE_EXTENSION",
+                    "message": f"File extension '{file_extension}' is not allowed",
+                    "supported_extensions": valid_extensions,
+                    "provided_extension": file_extension,
+                    "upload_id": upload_id
+                }
+            )
+        
+        # Update progress - validation complete
+        upload_progress[upload_id].update(file_size * 0.1)  # 10% for validation
+        
+        # Create uploads directory if it doesn't exist
+        upload_dir = Path("uploads")
+        upload_dir.mkdir(exist_ok=True)
+        
+        # Generate unique filename
+        unique_filename = f"{type}_{uuid.uuid4().hex[:8]}{file_extension}"
+        file_path = upload_dir / unique_filename
+        
+        # Update progress - starting file write
+        upload_progress[upload_id].update(file_size * 0.2)  # 20% for setup
+        
+        # Save file with progress tracking
+        with open(file_path, "wb") as buffer:
+            buffer.write(file_content)
+        
+        # Update progress - file written
+        upload_progress[upload_id].update(file_size * 0.8)  # 80% for file write
+        
+        # Verify file was written correctly
+        if not file_path.exists() or file_path.stat().st_size != file_size:
+            upload_progress[upload_id].fail("File write verification failed")
+            raise Exception("File write verification failed")
+        
+        # Create URL
         file_url = f"/uploads/{unique_filename}"
+        
+        # Update progress - updating database
+        upload_progress[upload_id].update(file_size * 0.9)  # 90% for verification
         
         # Update media settings in database
         media_collection = db.media_settings
         await media_collection.update_one(
             {"id": "main"},
-            {"$set": {type: file_url}},
+            {"$set": {
+                type: file_url,
+                f"{type}_metadata": {
+                    "filename": file.filename,
+                    "size": file_size,
+                    "content_type": file.content_type,
+                    "uploaded_at": datetime.now().isoformat(),
+                    "upload_id": upload_id
+                }
+            }},
             upsert=True
         )
         
-        return {"url": file_url, "message": f"{type} uploaded successfully"}
+        # Mark upload as complete
+        upload_progress[upload_id].complete()
         
+        return {
+            "success": True,
+            "url": file_url,
+            "message": f"{type.replace('_', ' ').title()} uploaded successfully",
+            "upload_id": upload_id,
+            "file_info": {
+                "filename": unique_filename,
+                "original_name": file.filename,
+                "size": file_size,
+                "size_mb": round(file_size / (1024*1024), 2),
+                "content_type": file.content_type
+            }
+        }
+        
+    except HTTPException:
+        # Re-raise HTTP exceptions as-is
+        raise
     except Exception as e:
-        # Clean up file if database update fails
-        if file_path.exists():
-            file_path.unlink()
+        # Mark upload as failed
+        upload_progress[upload_id].fail(str(e))
+        
+        # Clean up file if anything fails
+        if 'file_path' in locals() and file_path.exists():
+            try:
+                file_path.unlink()
+            except:
+                pass  # Ignore cleanup errors
+        
+        # Determine error type and provide appropriate response
+        if "Permission denied" in str(e):
+            error_detail = {
+                "error": "PERMISSION_DENIED",
+                "message": "Server does not have permission to save the file",
+                "upload_id": upload_id
+            }
+        elif "No space left" in str(e):
+            error_detail = {
+                "error": "INSUFFICIENT_STORAGE",
+                "message": "Server storage is full",
+                "upload_id": upload_id
+            }
+        elif "write verification failed" in str(e):
+            error_detail = {
+                "error": "FILE_CORRUPTION",
+                "message": "File may have been corrupted during upload",
+                "upload_id": upload_id
+            }
+        else:
+            error_detail = {
+                "error": "UPLOAD_FAILED",
+                "message": f"Failed to upload file: {str(e)}",
+                "upload_id": upload_id
+            }
+        
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to upload file: {str(e)}"
+            detail=error_detail
         )
 
 @admin_router.delete("/media/{media_type}")

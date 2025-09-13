@@ -1,0 +1,13 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mongoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#47a248;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#116149;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#mongoGrad)"/>
+  <path d="M300 120 Q320 140 320 180 Q320 220 300 240 Q280 220 280 180 Q280 140 300 120" fill="white"/>
+  <ellipse cx="300" cy="250" rx="15" ry="8" fill="white"/>
+  <text x="300" y="320" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">MongoDB Design</text>
+  <text x="300" y="350" text-anchor="middle" fill="#47a248" font-family="Arial, sans-serif" font-size="16">Patterns & Best Practices</text>
+</svg>
